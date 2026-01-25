@@ -70,6 +70,35 @@ The HealthPlus Lab Results Dashboard serves as a bridge between conventional lab
 
 ---
 
+## Named Range Sets
+
+The platform uses **Named Range Sets**—versioned, curated collections of reference ranges that clinics can select and customize.
+
+### What's in a Range Set?
+
+| Component | Description |
+|:----------|:------------|
+| **Functional Ranges** | Optimized ranges for wellness assessment |
+| **Conventional Ranges** | Standard laboratory reference intervals |
+| **Version History** | Complete audit trail of all changes |
+| **Checksum** | Integrity verification for published sets |
+
+### Range Set Lifecycle
+
+```
+DRAFT → PUBLISHED → DEPRECATED
+  │         │            │
+  │         │            └─ Historical reference only
+  │         └─ Active, immutable, selectable
+  └─ Editable, not yet available
+```
+
+Clinics select which published range set to use. Patient-specific overrides always take precedence over the selected set.
+
+[Learn more about Named Range Sets →]({% link docs/named-range-sets.md %})
+
+---
+
 ## Key Features
 
 ### 1. Dual-Range Display

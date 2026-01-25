@@ -185,7 +185,47 @@ After promotion:
 
 ---
 
+---
+
+## Interaction with Named Range Sets
+
+Range overrides work alongside [Named Range Sets]({% link docs/named-range-sets.md %})—the curated collections of functional and conventional ranges your clinic uses.
+
+### The Complete Precedence Chain
+
+```
+1. PATIENT-SPECIFIC OVERRIDE  ← Your overrides (highest priority)
+         ▼
+2. PERSONA-SPECIFIC RANGE     ← Promoted overrides
+         ▼
+3. GLOBAL FUNCTIONAL RANGE    ← From clinic's Named Range Set
+         ▼
+4. CONVENTIONAL RANGE         ← From clinic's Named Range Set (fallback)
+```
+
+### What Happens When the Clinic Changes Range Sets?
+
+{: .important }
+> **Your patient overrides are always preserved.** They continue to take precedence regardless of which Named Range Set your clinic selects.
+
+| Override Type | Behavior on Range Set Change |
+|:--------------|:-----------------------------|
+| Patient Override | **Preserved** - Still applies to that patient |
+| Persona Range | **Preserved** - Still applies to that cohort |
+| Global Range | **Replaced** - New set's range takes effect |
+
+### When to Use Overrides vs. Range Sets
+
+| Need | Solution |
+|:-----|:---------|
+| One patient needs different TSH | Create **patient override** |
+| All Hashimoto's patients need different TSH | Create **persona** and promote override |
+| Entire practice uses different philosophy | Ask admin to select different **Named Range Set** |
+
+---
+
 ## Next Steps
 
+- [Learn about Named Range Sets →]({% link docs/named-range-sets.md %})
 - [Explore AI-Assisted Interpretations →]({% link docs/ai-interpretations.md %})
 - [Review Example Scenarios →]({% link docs/scenarios/index.md %})

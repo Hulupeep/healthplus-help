@@ -53,6 +53,7 @@ Create patient-specific ranges and promote them to reusable personas for similar
 |:--------|:------------|
 | [Platform Overview]({% link docs/platform-overview.md %}) | Understand how the system works |
 | [Conventional to Functional]({% link docs/conventional-to-functional.md %}) | The core logic explained |
+| [Named Range Sets]({% link docs/named-range-sets.md %}) | Versioned range collections for clinics |
 | [Patient Context]({% link docs/patient-context.md %}) | Pregnancy, cycle, and persona handling |
 | [Explainability]({% link docs/explainability.md %}) | Deep dive into the transparency system |
 | [Range Overrides]({% link docs/range-overrides.md %}) | Create and manage custom ranges |

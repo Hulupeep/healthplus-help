@@ -133,6 +133,24 @@ Practical walkthroughs for common tasks in the HealthPlus platform.
 
 ---
 
+---
+
+## Administration
+
+### Range Set Management
+
+For administrators managing Named Range Sets:
+
+1. Navigate to **Admin** → **Range Sets**
+2. View available range sets and their status
+3. Browse individual ranges within each set
+4. Select the active range set for your clinic
+5. Manage draft range sets (with permissions)
+
+[View full Admin Guide →]({% link docs/guides/admin/range-set-management.md %})
+
+---
+
 ## Tips for Success
 
 {: .tip }

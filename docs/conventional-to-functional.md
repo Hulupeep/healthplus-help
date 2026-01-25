@@ -121,12 +121,15 @@ Not all functional ranges are created equal. The platform applies ranges in orde
 │    Defined for a patient cohort/phenotype              │
 ├────────────────────────────────────────────────────────┤
 │ 3. GLOBAL FUNCTIONAL RANGE                             │
-│    Default functional range for all patients           │
+│    From clinic's selected Named Range Set              │
 ├────────────────────────────────────────────────────────┤
 │ 4. CONVENTIONAL RANGE                                  │ ← Fallback
-│    Standard laboratory reference interval              │
+│    From clinic's selected Named Range Set              │
 └────────────────────────────────────────────────────────┘
 ```
+
+{: .note }
+> Global and conventional ranges come from your clinic's selected [Named Range Set]({% link docs/named-range-sets.md %})—a versioned, auditable collection of reference ranges. Patient overrides always take precedence.
 
 ---
 
