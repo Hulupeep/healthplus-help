@@ -25,11 +25,11 @@ The documents are written to be clear when read aloud, making them suitable for 
 
 | # | Title | Audience | Focus |
 |:--|:------|:---------|:------|
-| **1** | [Big Picture Overview](1-big-picture-overview.md) | First-time users | Intuition and trust |
-| **2** | [Named Range Sets Explained](2-named-range-sets-explained.md) | Clinicians configuring the system | Correct mental model |
-| **3** | [From Labs to Functional Meaning](3-operational-flow.md) | Clinicians wanting operational clarity | Step-by-step flow |
-| **4** | [Symptoms, Context, and AI Interpretation](4-symptoms-and-interpretation.md) | Clinicians evaluating decision support | Safety and boundaries |
-| **5** | [Technical and Audit-Level Detail](5-audit-and-governance.md) | Clinical leads and auditors | Governance and defensibility |
+| **1** | [Big Picture Overview](1-big-picture-overview) | First-time users | Intuition and trust |
+| **2** | [Named Range Sets Explained](2-named-range-sets-explained) | Clinicians configuring the system | Correct mental model |
+| **3** | [From Labs to Functional Meaning](3-operational-flow) | Clinicians wanting operational clarity | Step-by-step flow |
+| **4** | [Symptoms, Context, and AI Interpretation](4-symptoms-and-interpretation) | Clinicians evaluating decision support | Safety and boundaries |
+| **5** | [Technical and Audit-Level Detail](5-audit-and-governance) | Clinical leads and auditors | Governance and defensibility |
 
 ---
 

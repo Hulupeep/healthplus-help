@@ -42,9 +42,9 @@ Different laboratories offer different testing approaches. The platform tracks w
 
 | Methodology | Laboratory | Specimen | Primary Focus |
 |:------------|:-----------|:---------|:--------------|
-| [**DUTCH**](dutch-test.md) | Precision Analytical | Urine | Hormone metabolites |
-| [**ZRT Serum**](zrt-serum.md) | ZRT Laboratory | Serum | Standard chemistry |
-| [**NutrEval**](nutreval.md) | Genova Diagnostics | Urine + Blood | Nutritional status |
+| [**DUTCH**](dutch-test) | Precision Analytical | Urine | Hormone metabolites |
+| [**ZRT Serum**](zrt-serum) | ZRT Laboratory | Serum | Standard chemistry |
+| [**NutrEval**](nutreval) | Genova Diagnostics | Urine + Blood | Nutritional status |
 
 ---
 
@@ -85,10 +85,10 @@ When your clinic receives a result, the platform:
 
 | Document | Focus |
 |:---------|:------|
-| [DUTCH Test](dutch-test.md) | Comprehensive hormone metabolite testing |
-| [ZRT Serum Panels](zrt-serum.md) | Standard serum chemistry and hormones |
-| [NutrEval](nutreval.md) | Comprehensive nutritional assessment |
-| [Specimen Types](specimen-types.md) | Technical details on specimen handling |
+| [DUTCH Test](dutch-test) | Comprehensive hormone metabolite testing |
+| [ZRT Serum Panels](zrt-serum) | Standard serum chemistry and hormones |
+| [NutrEval](nutreval) | Comprehensive nutritional assessment |
+| [Specimen Types](specimen-types) | Technical details on specimen handling |
 
 ---
 
