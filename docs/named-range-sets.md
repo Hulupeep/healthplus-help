@@ -255,8 +255,24 @@ For administrators managing range sets, see the [Admin Guide: Range Set Manageme
 
 ---
 
+## Testing Methodologies Within Named Range Sets
+
+{: .note }
+> A single Named Range Set contains ranges for ALL testing methodologies. DUTCH, NutrEval, and ZRT are NOT separate Named Range Sets — they are properties of individual range definitions.
+
+Each range definition within a Named Range Set is tagged with:
+- **specimen_type**: serum, urine, saliva, etc.
+- **range_framework**: DUTCH, ZRT, Genova, etc.
+
+This allows the system to automatically select the correct range based on the specimen type of each result.
+
+For a detailed explanation, see [Philosophy vs Methodology →]({% link docs/architecture/philosophy-vs-methodology.md %})
+
+---
+
 ## Next Steps
 
+- [Philosophy vs Methodology →]({% link docs/architecture/philosophy-vs-methodology.md %})
 - [Understand Range Overrides →]({% link docs/range-overrides.md %})
 - [Explore the Explainability System →]({% link docs/explainability.md %})
 - [Admin: Range Set Management →]({% link docs/guides/admin/range-set-management.md %})

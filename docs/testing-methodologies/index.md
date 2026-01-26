@@ -100,3 +100,23 @@ A serum testosterone measures circulating hormone. A urine testosterone metaboli
 
 Neither is "better" — they answer different clinical questions. The platform keeps them separate and applies methodology-appropriate reference ranges.
 
+---
+
+## Relationship to Named Range Sets
+
+{: .important }
+> **Testing methodologies are NOT separate Named Range Sets.**
+>
+> DUTCH, NutrEval, and ZRT are properties of individual range definitions that live INSIDE your clinic's selected Named Range Set.
+
+When your clinic selects a Named Range Set (like "Optimal Wellness Functional"), you automatically get ranges for all testing methodologies:
+
+- Serum ranges for standard blood panels
+- Urine ranges for DUTCH hormone metabolites
+- Multi-specimen ranges for NutrEval assessments
+- Saliva ranges for cortisol panels
+
+You do not need to "activate" each methodology separately. Your Named Range Set already includes them.
+
+For more detail on this distinction, see [Philosophy vs Methodology →]({% link docs/architecture/philosophy-vs-methodology.md %})
+

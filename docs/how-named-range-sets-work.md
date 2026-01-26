@@ -507,8 +507,23 @@ Ranges are never silently changed. If the boundaries for TSH are updated:
 
 ---
 
+## A Note on Testing Methodologies
+
+{: .note }
+> Named Range Sets contain ranges for ALL testing methodologies (DUTCH, NutrEval, ZRT, etc.). Testing methodologies are properties of range definitions WITHIN a Named Range Set, not separate sets themselves.
+
+When your clinic selects "Optimal Wellness Functional", you get:
+- Serum ranges from ZRT and standard panels
+- Urine ranges from DUTCH hormone testing
+- Multi-specimen ranges from NutrEval
+
+You do not need to separately activate each methodology. For more detail, see [Philosophy vs Methodology →]({% link docs/architecture/philosophy-vs-methodology.md %})
+
+---
+
 ## Next Steps
 
+- [Philosophy vs Methodology →]({% link docs/architecture/philosophy-vs-methodology.md %})
 - [Understanding Range Overrides →]({% link docs/range-overrides.md %})
 - [The Explainability System →]({% link docs/explainability.md %})
 - [Patient Context and Demographics →]({% link docs/patient-context.md %})
