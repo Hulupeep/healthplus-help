@@ -189,7 +189,7 @@ After promotion:
 
 ## Interaction with Named Range Sets
 
-Range overrides work alongside [Named Range Sets]({% link docs/named-range-sets.md %})—the curated collections of functional and conventional ranges your clinic uses.
+Range overrides work alongside [Named Range Sets]({% link docs/named-range-sets.md %})—the curated collections of functional ranges your clinic uses.
 
 ### The Complete Precedence Chain
 
@@ -199,8 +199,6 @@ Range overrides work alongside [Named Range Sets]({% link docs/named-range-sets.
 2. PERSONA-SPECIFIC RANGE     ← Promoted overrides
          ▼
 3. GLOBAL FUNCTIONAL RANGE    ← From clinic's Named Range Set
-         ▼
-4. CONVENTIONAL RANGE         ← From clinic's Named Range Set (fallback)
 ```
 
 ### What Happens When the Clinic Changes Range Sets?
@@ -221,11 +219,13 @@ Range overrides work alongside [Named Range Sets]({% link docs/named-range-sets.
 | One patient needs different TSH | Create **patient override** |
 | All Hashimoto's patients need different TSH | Create **persona** and promote override |
 | Entire practice uses different philosophy | Ask admin to select different **Named Range Set** |
+| Provider conventional range is wrong or missing | Update **Conventional Reference Ranges** |
 
 ---
 
 ## Next Steps
 
 - [Learn about Named Range Sets →]({% link docs/named-range-sets.md %})
+- [Manage Conventional Reference Ranges →]({% link docs/conventional-reference-ranges.md %})
 - [Explore AI-Assisted Interpretations →]({% link docs/ai-interpretations.md %})
 - [Review Example Scenarios →]({% link docs/scenarios/index.md %})

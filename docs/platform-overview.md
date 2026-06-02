@@ -51,11 +51,12 @@ The HealthPlus Lab Results Dashboard serves as a bridge between conventional lab
 ┌─────────────────────────────────────────────────────────────────────────┐
 │                   RANGE RESOLUTION ENGINE                                │
 │                                                                          │
-│   Priority Chain:                                                        │
-│   1. Patient-specific overrides (highest priority)                       │
-│   2. Persona-specific ranges                                             │
-│   3. Global functional ranges                                            │
-│   4. Conventional ranges (fallback)                                      │
+│   Functional Priority Chain:                                             │
+│   1. Patient-specific functional overrides                               │
+│   2. Persona-specific functional ranges                                  │
+│   3. Active clinic functional range set                                  │
+│                                                                          │
+│   Conventional ranges resolve separately by lab/provider source.         │
 └─────────────────────────────────────────────────────────────────────────┘
                                     │
                                     ▼
@@ -72,14 +73,13 @@ The HealthPlus Lab Results Dashboard serves as a bridge between conventional lab
 
 ## Named Range Sets
 
-The platform uses **Named Range Sets**—versioned, curated collections of reference ranges that clinics can select and customize.
+The platform uses **Named Range Sets**—versioned, curated collections of functional ranges that clinics can select and customize.
 
 ### What's in a Range Set?
 
 | Component | Description |
 |:----------|:------------|
 | **Functional Ranges** | Optimized ranges for wellness assessment |
-| **Conventional Ranges** | Standard laboratory reference intervals |
 | **Version History** | Complete audit trail of all changes |
 | **Checksum** | Integrity verification for published sets |
 
@@ -93,7 +93,7 @@ DRAFT → PUBLISHED → DEPRECATED
   └─ Editable, not yet available
 ```
 
-Clinics select which published range set to use. Patient-specific overrides always take precedence over the selected set.
+Clinics select which published functional range set to use. Patient-specific overrides always take precedence over the selected set. Conventional ranges are maintained separately in the conventional reference range workflow.
 
 [Learn more about Named Range Sets →]({% link docs/named-range-sets.md %})
 
@@ -123,6 +123,7 @@ The platform automatically adjusts reference ranges based on:
 
 Click "Explain" on any result to see:
 - Which range was applied and why
+- Where the conventional and functional ranges came from
 - The precedence chain that determined the range
 - Citations and evidence supporting the range
 - Version history of range modifications
@@ -171,5 +172,6 @@ The platform uses a tabbed interface for comprehensive patient management:
 ## Next Steps
 
 - [Learn about Conventional to Functional Range Logic →]({% link docs/conventional-to-functional.md %})
+- [Review Range Sources and Citations →]({% link docs/range-sources-and-citations.md %})
 - [Understand Patient Context & Personas →]({% link docs/patient-context.md %})
 - [Jump to Step-by-Step Guides →]({% link docs/guides/index.md %})

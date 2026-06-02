@@ -21,12 +21,15 @@ Complete guide for administrators managing Named Range Sets in HealthPlus.
 
 ## Overview
 
-As an administrator, you can:
+As an administrator, you can manage functional range sets:
 - View and compare available range sets
 - Select the active range set for your clinic
 - Browse individual ranges within a set
 - Create draft range sets (with appropriate permissions)
 - Manage the range set lifecycle
+
+{: .important }
+Range Set Management controls functional ranges. Conventional lab/provider reference intervals are managed separately in [Conventional Reference Ranges]({% link docs/conventional-reference-ranges.md %}).
 
 ---
 
@@ -176,7 +179,7 @@ Your clinic's currently selected range set is shown with a **Selected** badge.
 | What Changes | What Stays the Same |
 |:-------------|:--------------------|
 | Global functional ranges | Patient-specific overrides |
-| Conventional reference ranges | Persona-specific ranges |
+| Provider conventional reference ranges | Persona-specific ranges |
 | Default interpretation thresholds | Historical interpretations |
 
 ---

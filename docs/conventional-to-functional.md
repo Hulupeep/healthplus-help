@@ -108,7 +108,21 @@ The platform uses a color-coded flagging system:
 
 ---
 
-## The Range Precedence System
+## Where the Two Ranges Come From
+
+Conventional and functional ranges are resolved separately.
+
+| Column | Source | Purpose |
+|:-------|:-------|:--------|
+| **Conventional Range** | Uploaded report interval, provider catalog, or conventional reference range catalog | Shows how the result compares to standard lab reference intervals |
+| **Functional Range** | Active functional Named Range Set, patient override, or persona override | Shows how the result compares to the clinic's functional target |
+
+{: .important }
+> Activating a functional Named Range Set does not activate conventional ranges. Conventional ranges are maintained in their own workflow so provider-specific intervals can remain visible and auditable.
+
+---
+
+## The Functional Range Precedence System
 
 Not all functional ranges are created equal. The platform applies ranges in order of specificity:
 
@@ -122,14 +136,20 @@ Not all functional ranges are created equal. The platform applies ranges in orde
 ├────────────────────────────────────────────────────────┤
 │ 3. GLOBAL FUNCTIONAL RANGE                             │
 │    From clinic's selected Named Range Set              │
-├────────────────────────────────────────────────────────┤
-│ 4. CONVENTIONAL RANGE                                  │ ← Fallback
-│    From clinic's selected Named Range Set              │
 └────────────────────────────────────────────────────────┘
 ```
 
 {: .note }
-> Global and conventional ranges come from your clinic's selected [Named Range Set]({% link docs/named-range-sets.md %})—a versioned, auditable collection of reference ranges. Patient overrides always take precedence.
+> The precedence chain above applies to functional ranges. Conventional ranges are shown beside functional ranges for comparison and are explained through their own source trail.
+
+### What Happens When One Range Is Missing?
+
+| Available data | What the result means |
+|:---------------|:----------------------|
+| Both conventional and functional ranges exist | The result can show both conventional and functional status. |
+| Conventional exists, functional is missing | The result can show conventional status, but functional classification is unavailable. |
+| Functional exists, conventional is missing | The result can show functional status, but conventional comparison is unavailable. |
+| Neither range exists | The result is unclassified and should not be treated as normal. |
 
 ---
 
@@ -178,4 +198,6 @@ Not all functional ranges are created equal. The platform applies ranges in orde
 ## Next Steps
 
 - [Learn about Patient Context & Personas →]({% link docs/patient-context.md %})
+- [Review Range Sources and Citations →]({% link docs/range-sources-and-citations.md %})
+- [Manage Conventional Reference Ranges →]({% link docs/conventional-reference-ranges.md %})
 - [Understand the Explainability System →]({% link docs/explainability.md %})

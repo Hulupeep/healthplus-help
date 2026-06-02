@@ -7,7 +7,7 @@ nav_order: 5
 # Named Range Sets
 {: .no_toc }
 
-Understanding the versioned, curated collections of functional and conventional ranges that power the HealthPlus interpretation engine.
+Understanding the functional range frameworks that power HealthPlus functional classifications.
 {: .fs-6 .fw-300 }
 
 ## Table of contents
@@ -20,259 +20,152 @@ Understanding the versioned, curated collections of functional and conventional 
 
 ## What Are Named Range Sets?
 
-A **Named Range Set** is a curated, versioned collection of reference ranges that clinics can select and apply to their patient population. Each set contains both functional ranges and conventional ranges for multiple analytes.
+A **Named Range Set** is a curated, versioned collection of **functional ranges**. It represents the clinic's functional interpretation framework.
+
+Examples include:
+
+- Optimal Wellness Functional
+- Athletic Performance Functional
+- Reproductive Health Functional
+- A clinic-specific custom functional set
 
 {: .important }
-> Named Range Sets provide a managed, auditable way to standardize reference ranges across a clinic while still allowing individual patient customizations.
-
-### Key Characteristics
-
-| Feature | Description |
-|:--------|:------------|
-| **Versioned** | Each modification creates a new version with full audit trail |
-| **Immutable** | Published versions cannot be modified, only deprecated |
-| **Checksummed** | Integrity verification prevents unauthorized changes |
-| **Auditable** | Complete history of who changed what and when |
+Named Range Sets are for functional ranges. Conventional reference intervals are managed separately in [Conventional Reference Ranges]({% link docs/conventional-reference-ranges.md %}).
 
 ---
 
-## What's Inside a Named Range Set?
+## Why Only One Functional Set Is Active
 
-A Named Range Set contains **range versions** that reference actual range definitions from two source tables:
+A clinic should have one active functional range set at a time.
 
-### 1. Functional Ranges
+That active set answers:
 
-Optimized ranges for wellness assessment:
-- Evidence-based thresholds for optimal health
-- May include multiple frameworks (e.g., "optimal", "suboptimal")
-- Documented with citations and evidence levels
-- Sex and age-stratified where appropriate
+> "Which functional philosophy should HealthPlus use when classifying patient results?"
 
-### 2. Conventional Ranges
-
-Standard laboratory reference intervals:
-- Traditional population-derived ranges
-- Used as fallback when functional ranges are unavailable
-- Required for regulatory and comparison purposes
-
-{: .note }
-> A single Named Range Set can include **both** functional and conventional ranges. The range resolution engine automatically selects the appropriate range based on the [precedence chain](#interaction-with-range-overrides).
+If two functional sets were active at the same time, the same result could receive conflicting functional classifications. HealthPlus avoids that by requiring one active functional set for the clinic.
 
 ---
 
-## Range Set Lifecycle
+## What the Range Set Catalog Shows
 
-Named Range Sets follow a strict lifecycle to ensure clinical safety:
+The Range Set Catalog lists available functional sets.
+
+| Display item | Meaning |
+|:-------------|:--------|
+| **Active** | This is the functional set currently used for new functional classifications. |
+| **Activate** | This set is available but not currently active. |
+| **Built-in** | The set is provided by HealthPlus. |
+| **Custom** | The set was created or maintained by your clinic. |
+| **Range count** | Number of functional range definitions in the set. |
+| **Refs** | Number of linked source references or citation groups. |
+
+If you see a card named "Standard Reference Ranges", treat it as a conventional catalog reference, not as the clinic's functional target set, unless your organization has explicitly built a conventional-aligned functional set.
+
+---
+
+## How Functional Range Selection Works
+
+For each result, HealthPlus resolves functional ranges in this order:
 
 ```
-┌─────────────────────────────────────────────────────────────────┐
-│                        DRAFT                                     │
-│  • Can be modified freely                                        │
-│  • Not available for patient interpretation                      │
-│  • Used for building and testing new range sets                  │
-└─────────────────────────────────────────────────────────────────┘
-                              │
-                              ▼ [Publish]
-┌─────────────────────────────────────────────────────────────────┐
-│                      PUBLISHED                                   │
-│  • Active and available for clinic selection                     │
-│  • IMMUTABLE - no changes allowed                                │
-│  • Full audit trail and checksum verification                    │
-│  • Multiple published versions can coexist                       │
-└─────────────────────────────────────────────────────────────────┘
-                              │
-                              ▼ [Deprecate]
-┌─────────────────────────────────────────────────────────────────┐
-│                     DEPRECATED                                   │
-│  • No longer available for new selection                         │
-│  • Still accessible for historical reference                     │
-│  • Clinics using it should migrate to newer version              │
-└─────────────────────────────────────────────────────────────────┘
+1. Patient-specific functional override
+2. Persona or cohort-specific functional range
+3. Active clinic functional Named Range Set
 ```
 
----
+The most specific matching range wins.
 
-## Built-in Range Sets
+Matching can consider:
 
-HealthPlus ships with pre-configured range sets:
-
-| Range Set | Description | Source |
-|:----------|:------------|:-------|
-| **Default Functional Ranges** | Optimized functional ranges for general wellness | HealthPlus curated |
-| **Conventional Reference** | Standard laboratory reference intervals | Lab industry standard |
-| **Optimal Wellness** | Tighter ranges for proactive health optimization | Functional medicine literature |
-
-{: .tip }
-> Most clinics start with the "Default Functional Ranges" set and customize from there.
+- Analyte
+- Unit
+- Specimen type
+- Biological sex
+- Age
+- Pregnancy status
+- Menstrual cycle phase, when relevant
+- Effective dates and version
 
 ---
 
-## Clinic Selection
+## What Named Range Sets Do Not Control
 
-Each clinic selects which Named Range Set to use as their default. This selection:
+Named Range Sets do not control:
 
-- Applies to all new patient results
-- Can be changed at any time (affects future interpretations only)
-- Is tracked in the `clinic_range_set_selection` audit log
-- Includes the acting clinician and timestamp
+- The patient's measured result value.
+- The conventional range printed on an uploaded lab report.
+- Provider-specific conventional intervals such as Quest or Labcorp.
+- AI narrative wording by itself.
+- Symptoms or diagnoses.
 
-### Changing Your Clinic's Range Set
-
-1. Navigate to **Admin** → **Range Sets**
-2. Browse available published range sets
-3. Click **Select** on your chosen set
-4. Confirm the selection
-
-{: .warning }
-> Changing your clinic's range set affects how future results are interpreted. Historical interpretations remain unchanged for auditability.
+They provide functional numeric boundaries. Interpretation is layered on top after classification.
 
 ---
 
-## Interaction with Range Overrides
+## Built-In and Custom Sets
 
-Named Range Sets work alongside the existing override system. The **complete precedence chain** is:
+Built-in sets are maintained by HealthPlus and may be locked once published.
 
-```
-┌────────────────────────────────────────────────────────┐
-│ 1. PATIENT-SPECIFIC OVERRIDE                           │ ← Highest Priority
-│    Clinician created for this specific patient         │
-├────────────────────────────────────────────────────────┤
-│ 2. PERSONA-SPECIFIC RANGE                              │
-│    Defined for a patient cohort/phenotype              │
-├────────────────────────────────────────────────────────┤
-│ 3. GLOBAL FUNCTIONAL RANGE                             │
-│    From the clinic's selected Named Range Set          │
-├────────────────────────────────────────────────────────┤
-│ 4. CONVENTIONAL RANGE                                  │ ← Fallback
-│    From the clinic's selected Named Range Set          │
-└────────────────────────────────────────────────────────┘
-```
+Custom sets allow a clinic to create its own functional framework. A custom set is appropriate when:
 
-### What Happens to Existing Overrides?
+- The clinic uses a different functional philosophy.
+- The clinic has a specialty population.
+- The clinic needs to adjust functional ranges across many patients.
 
-{: .important }
-> **Patient overrides are preserved when you change range sets.** They continue to take precedence over the new set's ranges.
-
-When you change your clinic's Named Range Set:
-
-| Scope | Behavior |
-|:------|:---------|
-| **Patient Overrides** | **Preserved** - Continue to override any range set |
-| **Persona Ranges** | **Preserved** - Continue to apply to assigned patients |
-| **Global Ranges** | **Replaced** - New set's ranges take effect |
-| **Conventional Ranges** | **Replaced** - New set's ranges take effect |
-
-### Example Scenario
-
-Your clinic has been using "Default Functional Ranges" and you switch to "Optimal Wellness":
-
-1. **TSH Patient Override (0.5-1.5)** - Still applies to that specific patient
-2. **TSH Persona Range for Hashimoto's (0.5-1.8)** - Still applies to Hashimoto's patients
-3. **TSH Global Range** - Now uses "Optimal Wellness" range (0.5-1.7)
-4. **TSH Conventional** - Now uses "Optimal Wellness" conventional (0.4-4.5)
+For one patient, use a patient override instead of changing the clinic's active set.
 
 ---
 
-## Version History and Auditing
+## Versioning and Auditability
 
-Every range set maintains complete version history:
+Published functional range sets are versioned.
 
-### Tracked Events
+| Status | Meaning |
+|:-------|:--------|
+| **Draft** | Can be edited before use. |
+| **Published** | Locked for clinical use. |
+| **Active** | The published set currently selected by the clinic. |
+| **Deprecated** | Kept for historical reference but not recommended for new use. |
 
-| Event | Information Recorded |
-|:------|:--------------------|
-| **Version Created** | Who, when, description of changes |
-| **Range Added** | Analyte, bounds, rationale |
-| **Range Modified** | Old values, new values, reason |
-| **Range Removed** | Which range, why |
-| **Published** | Who approved, effective date |
-| **Deprecated** | Reason, replacement recommendation |
-
-### Checksum Verification
-
-Published range sets include a cryptographic checksum that:
-- Verifies no unauthorized modifications occurred
-- Provides regulatory compliance evidence
-- Enables integrity auditing
+Historical results should remain tied to the version that was active when they were classified.
 
 ---
 
 ## Explainability Integration
 
-The [Explainability System]({% link docs/explainability.md %}) shows which Named Range Set provided each range:
+The Explain dialog shows which functional source was used:
 
 ```
-┌─────────────────────────────────────────────────────────────────┐
-│ WHY THIS RANGE?                                                 │
-├─────────────────────────────────────────────────────────────────┤
-│ Source: Default Functional Ranges (v2.1)                        │
-│ Range Type: Functional                                          │
-│ Applied Range: 0.5 - 2.0 mIU/L                                  │
-│                                                                 │
-│ No patient or persona override exists for this analyte.         │
-│ Using clinic's selected range set.                              │
-│                                                                 │
-│ Evidence: Thyroid optimization studies (2019-2023)              │
-│ Framework: optimal                                              │
-│ Last Updated: 2024-06-15                                        │
-└─────────────────────────────────────────────────────────────────┘
+Functional range source: Optimal Wellness Functional v1.0
+Scope: Global functional range
+Bounds: 0.5 - 2.0 mIU/L
+Source status: Citation linked
+Reason applied: No patient or persona override matched this result.
 ```
 
----
-
-## Best Practices
-
-### When to Use Different Range Sets
-
-{: .tip }
-✅ **Default Functional Ranges** - General practice, mixed patient population
-✅ **Optimal Wellness** - Preventive/longevity-focused practice
-✅ **Custom Range Set** - Specialty clinics with unique patient needs
-
-### When to Create Overrides vs. Change Range Sets
-
-| Situation | Recommendation |
-|:----------|:---------------|
-| One patient needs different TSH range | Create **patient override** |
-| All Hashimoto's patients need different TSH | Create **persona range** |
-| Your entire practice uses different TSH philosophy | Select different **range set** |
-| No existing set matches your practice | Request **custom range set** |
-
-### Migration Best Practices
-
-When switching range sets:
-1. Review the differences between sets
-2. Identify patients who may be affected
-3. Consider creating patient overrides for edge cases
-4. Document the change rationale
-5. Monitor for unexpected interpretation changes
+If no functional range is available, the Explain dialog should say so directly and the result should be treated as unclassified for functional status.
 
 ---
 
-## Admin Management
+## Relationship to Conventional Ranges
 
-For administrators managing range sets, see the [Admin Guide: Range Set Management]({% link docs/guides/admin/range-set-management.md %}).
+Conventional ranges are shown beside functional ranges, but they come from a different workflow.
 
----
+| Workflow | Controls |
+|:---------|:---------|
+| **Range Set Catalog** | Functional range sets and functional status |
+| **Conventional Reference Ranges** | Lab/provider reference intervals and conventional status |
 
-## Testing Methodologies Within Named Range Sets
+This separation lets HealthPlus show both views:
 
-{: .note }
-> A single Named Range Set contains ranges for ALL testing methodologies. DUTCH, NutrEval, and ZRT are NOT separate Named Range Sets — they are properties of individual range definitions.
-
-Each range definition within a Named Range Set is tagged with:
-- **specimen_type**: serum, urine, saliva, etc.
-- **range_framework**: DUTCH, ZRT, Genova, etc.
-
-This allows the system to automatically select the correct range based on the specimen type of each result.
-
-For a detailed explanation, see [Philosophy vs Methodology →]({% link docs/architecture/philosophy-vs-methodology.md %})
+- "How does the provider or lab view this result?"
+- "How does the clinic's functional framework view this result?"
 
 ---
 
 ## Next Steps
 
-- [Philosophy vs Methodology →]({% link docs/architecture/philosophy-vs-methodology.md %})
-- [Understand Range Overrides →]({% link docs/range-overrides.md %})
-- [Explore the Explainability System →]({% link docs/explainability.md %})
+- [How Named Range Sets Work →]({% link docs/how-named-range-sets-work.md %})
+- [Conventional Reference Ranges →]({% link docs/conventional-reference-ranges.md %})
+- [Range Sources and Citations →]({% link docs/range-sources-and-citations.md %})
 - [Admin: Range Set Management →]({% link docs/guides/admin/range-set-management.md %})

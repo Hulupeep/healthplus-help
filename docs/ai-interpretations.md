@@ -25,6 +25,7 @@ The AI interpretation system analyzes a patient's lab results and generates:
 - Pattern identification across biomarkers
 - Evidence-based intervention suggestions
 - Patient-friendly explanations (optional mode)
+- Decision traces showing range sources, symptoms, coverage gaps, and guardrails
 
 ---
 
@@ -164,8 +165,9 @@ Version 1 - 2024-02-14
 
 1. **Check accuracy** - Verify the AI correctly identified flagged values
 2. **Validate logic** - Ensure the pattern analysis makes clinical sense
-3. **Review recommendations** - Confirm dosing and interventions are appropriate
-4. **Add nuance** - Include patient-specific factors the AI may have missed
+3. **Review range coverage** - Confirm missing or unit-mismatched ranges were not counted as normal
+4. **Review recommendations** - Confirm dosing and interventions are appropriate
+5. **Add nuance** - Include patient-specific factors the AI may have missed
 
 ### When to Regenerate
 
@@ -184,4 +186,5 @@ Version 1 - 2024-02-14
 ## Next Steps
 
 - [View Step-by-Step Guides →]({% link docs/guides/index.md %})
+- [Understand AI Decision Trace →]({% link docs/ai-decision-trace.md %})
 - [Review Example Scenarios →]({% link docs/scenarios/index.md %})

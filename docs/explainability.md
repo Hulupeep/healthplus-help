@@ -48,8 +48,10 @@ Every lab result row includes an "Explain" button:
 
 The Explainability Dialog opens showing:
 - **Value & Status** - The result and its interpretation
-- **Range Applied** - Which range was used and why
-- **Precedence Chain** - Full decision tree
+- **Conventional Range Source** - Provider, uploaded report, or conventional catalog source
+- **Functional Range Source** - Active functional range set, patient override, or persona override
+- **Range Applied** - Which range was used for classification and why
+- **Precedence Chain** - Full functional decision tree
 - **Context** - Patient factors that modified the range
 - **Citation** - Evidence supporting the range
 - **Version** - When the range was last updated
@@ -57,7 +59,20 @@ The Explainability Dialog opens showing:
 
 ---
 
-## Range Precedence Chain
+## Conventional and Functional Sources
+
+The dialog should separate the two range types.
+
+| Range type | What the dialog should show |
+|:-----------|:----------------------------|
+| **Conventional** | Lab source, provider catalog, uploaded report range, unit, demographics, citation or source note |
+| **Functional** | Active functional set or override, version, scope, unit, demographics, citation or source note |
+
+If a source is missing, the dialog should say so directly. Missing range data should not be hidden behind a generic "normal" label.
+
+---
+
+## Functional Range Precedence Chain
 
 The dialog shows the complete decision tree:
 
@@ -96,12 +111,24 @@ Range: 0.5 - 2.0 mIU/L
 Citation: "Optimal Thyroid Function Study, 2022"
 ```
 
-### Level 4: Conventional Range (Fallback)
+Conventional ranges are not a level in this functional precedence chain. They are resolved separately and shown for comparison.
 
-```
-Standard laboratory reference interval.
-Only used if no functional range is defined.
-```
+---
+
+## Missing and Incomplete Sources
+
+The Explain dialog should make source gaps visible:
+
+| State | What it means |
+|:------|:--------------|
+| **No reference range configured** | No conventional or functional range matched this analyte in the current context. |
+| **No functional range configured** | Conventional comparison may exist, but functional classification is unavailable. |
+| **No conventional range configured** | Functional comparison may exist, but baseline lab comparison is unavailable. |
+| **No active range set selected** | The clinic has not selected a functional Named Range Set. |
+| **Unit mismatch** | A range exists, but the units cannot be safely compared. |
+| **Source missing** | A range exists, but provenance or citation details are incomplete. |
+
+For a deeper guide, see [Range Sources and Citations]({% link docs/range-sources-and-citations.md %}).
 
 ---
 
@@ -251,19 +278,23 @@ The platform maintains a complete audit trail:
 
 ### Before Making Clinical Decisions
 1. Click "Explain" to verify the range applied
-2. Check if context (pregnancy, cycle) is correctly set
-3. Review the precedence chain for appropriateness
-4. Note any clinician comments for additional guidance
+2. Check both conventional and functional sources
+3. Check if context (pregnancy, cycle) is correctly set
+4. Review the precedence chain for appropriateness
+5. Note any clinician comments for additional guidance
 
 ### When Results Seem Incorrect
 1. Verify patient context is up-to-date
 2. Check if an inappropriate persona is assigned
 3. Review if a patient override is affecting results
-4. Consider whether the functional range needs adjustment
+4. Confirm the conventional lab source is correct
+5. Consider whether the functional range needs adjustment
 
 ---
 
 ## Next Steps
 
 - [Learn Range Override Workflow →]({% link docs/range-overrides.md %})
+- [Review Range Sources and Citations →]({% link docs/range-sources-and-citations.md %})
+- [Manage Conventional Reference Ranges →]({% link docs/conventional-reference-ranges.md %})
 - [Explore AI-Assisted Interpretations →]({% link docs/ai-interpretations.md %})

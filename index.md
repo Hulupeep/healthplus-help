@@ -54,10 +54,13 @@ Create patient-specific ranges and promote them to reusable personas for similar
 | [Platform Overview]({% link docs/platform-overview.md %}) | Understand how the system works |
 | [Conventional to Functional]({% link docs/conventional-to-functional.md %}) | The core logic explained |
 | [Named Range Sets]({% link docs/named-range-sets.md %}) | Versioned range collections for clinics |
+| [Conventional Reference Ranges]({% link docs/conventional-reference-ranges.md %}) | Lab/provider reference interval management |
+| [Range Sources and Citations]({% link docs/range-sources-and-citations.md %}) | Where range values come from and what source gaps mean |
 | [Patient Context]({% link docs/patient-context.md %}) | Pregnancy, cycle, and persona handling |
 | [Explainability]({% link docs/explainability.md %}) | Deep dive into the transparency system |
 | [Range Overrides]({% link docs/range-overrides.md %}) | Create and manage custom ranges |
 | [AI Interpretations]({% link docs/ai-interpretations.md %}) | Generate clinical summaries |
+| [AI Decision Trace]({% link docs/ai-decision-trace.md %}) | How AI output explains classifications, symptoms, and guardrails |
 | [Step-by-Step Guides]({% link docs/guides/index.md %}) | Practical walkthroughs |
 
 ---
