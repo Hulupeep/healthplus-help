@@ -19,6 +19,8 @@ Guides for clinic administrators managing HealthPlus platform settings.
 | Guide | Description |
 |:------|:------------|
 | [Range Set Management]({% link docs/guides/admin/range-set-management.md %}) | Manage Named Range Sets for your clinic |
+| [Editing Functional Ranges]({% link docs/guides/admin/editing-functional-ranges.md %}) | Add, edit, and remove functional range members with immutable audit history |
+| [Functional Range Source Requirements]({% link docs/guides/admin/functional-range-source-requirements.md %}) | Understand citation, source, and clinic protocol requirements before publishing |
 
 ---
 
@@ -32,5 +34,7 @@ Administrator functions are available in the **Admin** section of the main menu.
 - Select the active range set for the clinic
 - Browse individual ranges within any set
 - Create and manage draft range sets
+- Add, edit, and remove draft functional ranges with audit reasons
+- Maintain citations and source notes for functional range members
 - Publish and deprecate range sets
 - View audit logs and version history

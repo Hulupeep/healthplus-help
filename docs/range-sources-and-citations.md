@@ -61,6 +61,22 @@ A clinic activates one functional range set at a time. That activation does not 
 
 ---
 
+## Functional Range Publish Rules
+
+Functional range sets cannot be published unless each member range has traceable source support.
+
+HealthPlus accepts one of:
+
+- A citation linked to the range version.
+- A source citation linked to the functional range.
+- An active clinic protocol note explaining the clinic rationale.
+
+If a functional range member only has numeric bounds and no source support, publishing is blocked. The affected analytes are listed so an administrator can add a citation or protocol note.
+
+For the administrator workflow, see [Functional Range Source Requirements]({% link docs/guides/admin/functional-range-source-requirements.md %}).
+
+---
+
 ## Reading the Explain Dialog
 
 Click **Explain** on a lab result row to open the explanation panel.
@@ -119,3 +135,4 @@ For conventional range maintenance, see [Conventional Reference Ranges]({% link 
 
 For functional range set selection, see [Named Range Sets]({% link docs/named-range-sets.md %}).
 
+For functional range source requirements, see [Functional Range Source Requirements]({% link docs/guides/admin/functional-range-source-requirements.md %}).

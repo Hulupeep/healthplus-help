@@ -46,9 +46,9 @@ If two functional sets were active at the same time, the same result could recei
 
 ---
 
-## What the Range Set Catalog Shows
+## What the Functional Range Sets Catalog Shows
 
-The Range Set Catalog lists available functional sets.
+The Functional Range Sets catalog lists available functional sets.
 
 | Display item | Meaning |
 |:-------------|:--------|
@@ -59,7 +59,7 @@ The Range Set Catalog lists available functional sets.
 | **Range count** | Number of functional range definitions in the set. |
 | **Refs** | Number of linked source references or citation groups. |
 
-If you see a card named "Standard Reference Ranges", treat it as a conventional catalog reference, not as the clinic's functional target set, unless your organization has explicitly built a conventional-aligned functional set.
+Standard conventional reference ranges are managed in the conventional reference range workflow, not activated from the Functional Range Sets catalog.
 
 ---
 
@@ -129,6 +129,26 @@ Published functional range sets are versioned.
 
 Historical results should remain tied to the version that was active when they were classified.
 
+### Immutable Editing
+
+Draft range sets can be changed, but edits are still audited.
+
+When an administrator edits a functional range member, HealthPlus creates a new immutable range version instead of overwriting the old row. The draft set points to the new member, and the old range remains available for audit history.
+
+Add, edit, and remove actions require an audit reason.
+
+### Source Requirements
+
+A draft cannot be published unless each functional range member has source support.
+
+Acceptable support includes:
+
+- A linked range version citation.
+- A linked functional range source citation.
+- An active clinic protocol note.
+
+If source support is missing, publish is blocked until the gap is resolved.
+
 ---
 
 ## Explainability Integration
@@ -153,7 +173,7 @@ Conventional ranges are shown beside functional ranges, but they come from a dif
 
 | Workflow | Controls |
 |:---------|:---------|
-| **Range Set Catalog** | Functional range sets and functional status |
+| **Functional Range Sets** | Functional range sets and functional status |
 | **Conventional Reference Ranges** | Lab/provider reference intervals and conventional status |
 
 This separation lets HealthPlus show both views:
@@ -166,6 +186,8 @@ This separation lets HealthPlus show both views:
 ## Next Steps
 
 - [How Named Range Sets Work →]({% link docs/how-named-range-sets-work.md %})
+- [Editing Functional Ranges →]({% link docs/guides/admin/editing-functional-ranges.md %})
+- [Functional Range Source Requirements →]({% link docs/guides/admin/functional-range-source-requirements.md %})
 - [Conventional Reference Ranges →]({% link docs/conventional-reference-ranges.md %})
 - [Range Sources and Citations →]({% link docs/range-sources-and-citations.md %})
 - [Admin: Range Set Management →]({% link docs/guides/admin/range-set-management.md %})

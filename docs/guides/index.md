@@ -141,13 +141,23 @@ Practical walkthroughs for common tasks in the HealthPlus platform.
 
 For administrators managing Named Range Sets:
 
-1. Navigate to **Admin** → **Range Sets**
+1. Navigate to **Admin** -> **Functional Range Sets**
 2. View available range sets and their status
 3. Browse individual ranges within each set
 4. Select the active range set for your clinic
 5. Manage draft range sets (with permissions)
 
 [View full Admin Guide →]({% link docs/guides/admin/range-set-management.md %})
+
+### Functional Range Sources
+
+Before publishing a functional range set, every member needs traceable source support.
+
+1. Add a citation, source citation ID, or clinic protocol note.
+2. Enter a meaningful audit reason for add, edit, or remove actions.
+3. Publish only after source gaps are resolved.
+
+[View source requirements →]({% link docs/guides/admin/functional-range-source-requirements.md %})
 
 ---
 

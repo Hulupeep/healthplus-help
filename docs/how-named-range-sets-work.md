@@ -35,7 +35,7 @@ The selected functional set does not replace the laboratory's conventional refer
 | **Conventional reference ranges** | How would the lab or provider compare this result? | Quest HDL female reference interval |
 | **Functional Named Range Sets** | How does the clinic's functional framework compare this result? | Optimal Wellness HDL target |
 
-The Range Set Catalog controls the second workflow only: functional ranges.
+The Functional Range Sets catalog controls the second workflow only: functional ranges.
 
 ---
 

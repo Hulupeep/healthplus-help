@@ -148,6 +148,10 @@ Every range can have citations:
 └─────────────────────────────────────────────────────────────────┘
 ```
 
+For functional range sets, source support is required before publication. The support can be a linked citation, a functional range source citation, or an active clinic protocol note. If source support is missing, the range set remains in draft until the gap is resolved.
+
+See [Functional Range Source Requirements]({% link docs/guides/admin/functional-range-source-requirements.md %}) for the administrator workflow.
+
 ---
 
 ## Version History

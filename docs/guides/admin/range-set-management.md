@@ -36,8 +36,8 @@ Range Set Management controls functional ranges. Conventional lab/provider refer
 ## Accessing Range Set Administration
 
 1. Navigate to **Admin** in the main menu
-2. Click **Range Sets**
-3. You'll see the Range Sets Catalog
+2. Click **Functional Range Sets**
+3. You'll see the Functional Range Sets catalog
 
 ---
 
@@ -47,8 +47,8 @@ The catalog displays all available range sets with key information:
 
 ```
 ┌─────────────────────────────────────────────────────────────────┐
-│ NAMED RANGE SETS                                                 │
-│ Manage reference range collections for your clinic               │
+│ FUNCTIONAL RANGE SETS                                            │
+│ Choose the functional range set used for interpretation           │
 ├─────────────────────────────────────────────────────────────────┤
 │                                                                  │
 │ ┌──────────────────────────────────────────────────────────────┐│
@@ -57,7 +57,7 @@ The catalog displays all available range sets with key information:
 │ │                                                              ││
 │ │ Source: system    Ranges: 156    Version: 2.1                ││
 │ │                                                              ││
-│ │ [View Ranges] [Details] [Select for Clinic]                  ││
+│ │ [View Ranges] [Preview] [Activate]                          ││
 │ └──────────────────────────────────────────────────────────────┘│
 │                                                                  │
 │ ┌──────────────────────────────────────────────────────────────┐│
@@ -66,7 +66,7 @@ The catalog displays all available range sets with key information:
 │ │                                                              ││
 │ │ Source: system    Ranges: 142    Version: 1.0                ││
 │ │                                                              ││
-│ │ [View Ranges] [Details] [Select for Clinic]                  ││
+│ │ [View Ranges] [Preview] [Activate]                          ││
 │ └──────────────────────────────────────────────────────────────┘│
 │                                                                  │
 └─────────────────────────────────────────────────────────────────┘
@@ -81,6 +81,8 @@ The catalog displays all available range sets with key information:
 | **Source** | `system` (built-in) or `clinic` (custom) |
 | **Ranges** | Total number of ranges in the set |
 | **Version** | Current version number |
+
+Conventional reference range catalogs are managed separately and should not be activated as functional range sets.
 
 ---
 
@@ -155,32 +157,33 @@ Click any range to see complete details:
 
 ---
 
-## Selecting a Range Set for Your Clinic
+## Activating a Functional Range Set
 
-### Current Selection
+### Current Active Set
 
-Your clinic's currently selected range set is shown with a **Selected** badge.
+Your clinic's active functional range set is shown with an **Active** badge.
 
-### Changing Selection
+### Changing the Active Set
 
 1. Find the desired range set in the catalog
-2. Click **Select for Clinic**
+2. Click **Activate**
 3. Review the confirmation dialog:
-   - Current selection
-   - New selection
+   - Current active set
+   - New active set
    - Impact summary
-4. Click **Confirm Selection**
+4. Click **Confirm Activation**
 
 {: .warning }
 > Changing your range set affects how future results are interpreted. Review the differences carefully before switching.
 
-### Selection Impact
+### Activation Impact
 
 | What Changes | What Stays the Same |
 |:-------------|:--------------------|
-| Global functional ranges | Patient-specific overrides |
-| Provider conventional reference ranges | Persona-specific ranges |
-| Default interpretation thresholds | Historical interpretations |
+| Global functional ranges from the active set | Patient-specific overrides |
+| Default functional classification thresholds | Persona-specific ranges |
+| Future functional interpretation baseline | Provider conventional reference ranges |
+| Functional source labels shown in Explain | Historical interpretations |
 
 ---
 
@@ -210,18 +213,24 @@ Your clinic's currently selected range set is shown with a **Selected** badge.
    - Sex applicability (All, Male, Female)
    - Age range (optional)
    - Framework
-   - Notes/rationale
+   - Source citation or source note, when available
+   - Change reason
 5. Click **Add Range**
 
 {: .important }
 > Each analyte can only appear once per demographic combination (same sex + age range) in a range set.
+
+For the detailed workflow, see [Editing Functional Ranges]({% link docs/guides/admin/editing-functional-ranges.md %}).
 
 ### Editing Ranges in a Draft
 
 1. Navigate to the range in the draft
 2. Click **Edit**
 3. Modify the desired fields
-4. Click **Save Changes**
+4. Enter a change reason
+5. Click **Save Changes**
+
+Editing does not overwrite the original range row. HealthPlus creates a new immutable range version and replaces the member in the draft set.
 
 ### Validation Rules
 
@@ -238,10 +247,11 @@ When editing ranges:
 
 1. Navigate to the range
 2. Click **Delete**
-3. Confirm the deletion
+3. Enter or confirm the audit reason
+4. Confirm the removal
 
 {: .warning }
-> Deletion is permanent for draft ranges. Published ranges cannot be deleted.
+> Removing a member from a draft does not erase historical range data. Published ranges cannot be removed from the published version.
 
 ---
 
@@ -265,6 +275,20 @@ When a draft is ready for clinical use:
 - All ranges become immutable
 - Set becomes available for clinic selection
 - Audit trail records the publication event
+
+### Source Requirements on Publish
+
+Before publish, every functional range member must have acceptable source support.
+
+HealthPlus accepts at least one of:
+
+- A linked citation on the range version.
+- A linked source citation on the functional range.
+- An active clinic protocol note.
+
+If a member is missing source support, publish is blocked and the affected analytes are listed.
+
+For details, see [Functional Range Source Requirements]({% link docs/guides/admin/functional-range-source-requirements.md %}).
 
 ---
 
@@ -301,7 +325,7 @@ When a range set should no longer be used:
 Each event records:
 - **Timestamp**: When the action occurred
 - **Actor**: Who performed the action
-- **Action Type**: Created, modified, published, etc.
+- **Action Type**: Added, replaced, removed, published, etc.
 - **Details**: Specific changes made
 - **Rationale**: Why the change was made (if provided)
 
@@ -351,6 +375,18 @@ Each event records:
 
 **Solution**: Create a new draft version to make changes.
 
+### "Change reason is required" Error
+
+**Cause**: Add, edit, and remove actions need audit rationale.
+
+**Solution**: Enter a clear reason for the change before saving.
+
+### "Cannot publish version with uncited member ranges" Error
+
+**Cause**: One or more functional range members are missing source support.
+
+**Solution**: Add a citation, source citation, or clinic protocol note for each listed analyte, then publish again.
+
 ### "Duplicate analyte" Error
 
 **Cause**: The analyte + sex + age combination already exists.
@@ -374,5 +410,7 @@ Each event records:
 ## Related Topics
 
 - [Named Range Sets Overview →]({% link docs/named-range-sets.md %})
+- [Editing Functional Ranges →]({% link docs/guides/admin/editing-functional-ranges.md %})
+- [Functional Range Source Requirements →]({% link docs/guides/admin/functional-range-source-requirements.md %})
 - [Range Override Workflow →]({% link docs/range-overrides.md %})
 - [Explainability System →]({% link docs/explainability.md %})

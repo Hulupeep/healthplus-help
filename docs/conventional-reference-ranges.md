@@ -27,10 +27,10 @@ They are different from functional ranges:
 | Range type | Managed where | Used for |
 |:-----------|:--------------|:---------|
 | **Conventional reference range** | Conventional reference range admin workflow | Baseline lab comparison and conventional status |
-| **Functional range** | Functional Range Set Catalog | Clinic functional targets and functional status |
+| **Functional range** | Functional Range Sets catalog | Clinic functional targets and functional status |
 
 {: .important }
-The functional Range Set Catalog does not replace the conventional reference range catalog. Both workflows are needed because a lab result can show both conventional and functional comparisons.
+The Functional Range Sets catalog does not replace the conventional reference range catalog. Both workflows are needed because a lab result can show both conventional and functional comparisons.
 
 ---
 
@@ -141,4 +141,3 @@ If a conventional range is missing, the interpretation should:
 - Show confidence as limited when several important results cannot be classified.
 
 For more detail, see [AI Decision Trace]({% link docs/ai-decision-trace.md %}).
-
