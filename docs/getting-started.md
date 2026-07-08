@@ -82,14 +82,19 @@ After upload:
 
 The dashboard uses a tabbed interface:
 
-| Tab | Purpose |
-|:----|:--------|
-| **Patient** | Demographics, pregnancy/cycle context |
-| **Lab Results** | All test results with dual ranges |
-| **Interpretations** | AI-generated clinical summaries |
-| **Protocol** | Treatment recommendations |
-| **Side Effects** | Tracking adverse reactions |
-| **Follow-up** | Scheduling next steps |
+| Tab | Purpose | Status |
+|:----|:--------|:-------|
+| **Patient** | Demographics, pregnancy/cycle context | Available |
+| **Lab Results** | All test results with dual ranges | Available |
+| **Interpretations** | AI-generated clinical summaries | Available |
+| **Protocol** | Treatment recommendations and intervention plans | Placeholder — not yet available |
+| **Side Effects** | Tracking adverse reactions | Placeholder — not yet available |
+| **Follow-up** | Scheduling next steps | Placeholder — not yet available |
+
+> **Note:** The **Protocol**, **Side Effects**, and **Follow-up** tabs are visible in the
+> dashboard but their features are not built yet. Each opens an empty state whose primary
+> action button is **disabled** and labeled *"This feature isn't available yet"* — so there is
+> nothing to log or schedule there for now. This is expected behavior, not a bug.
 
 ### Reading Lab Results
 
