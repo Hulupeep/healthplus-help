@@ -43,7 +43,14 @@ Range Set Management controls functional ranges. Conventional lab/provider refer
 
 ## The Range Sets Catalog
 
-The catalog displays all available range sets with key information:
+The catalog displays all available range sets with key information. It is read
+live from the range-set catalog, so the names and versions shown match the
+current active data. The built-in functional set is **Optimal Wellness
+Functional**; clinic-created sets appear alongside it as additional cards.
+
+{: .note }
+Names and versions below reflect the current catalog. Range counts are
+illustrative — the real count is shown per set in the app.
 
 ```
 ┌─────────────────────────────────────────────────────────────────┐
@@ -52,21 +59,21 @@ The catalog displays all available range sets with key information:
 ├─────────────────────────────────────────────────────────────────┤
 │                                                                  │
 │ ┌──────────────────────────────────────────────────────────────┐│
-│ │ Default Functional Ranges                    [PUBLISHED]     ││
+│ │ Optimal Wellness Functional                  [PUBLISHED]     ││
 │ │ Optimized functional ranges for general wellness assessment  ││
 │ │                                                              ││
-│ │ Source: system    Ranges: 156    Version: 2.1                ││
+│ │ Source: system    Ranges: (shown in app)    Version: 1.0.1   ││
 │ │                                                              ││
 │ │ [View Ranges] [Preview] [Activate]                          ││
 │ └──────────────────────────────────────────────────────────────┘│
 │                                                                  │
 │ ┌──────────────────────────────────────────────────────────────┐│
-│ │ Optimal Wellness                             [PUBLISHED]     ││
-│ │ Tighter ranges for proactive health optimization             ││
+│ │ Clinic Custom Ranges (example)               [DRAFT]        ││
+│ │ Example clinic-created draft set                             ││
 │ │                                                              ││
-│ │ Source: system    Ranges: 142    Version: 1.0                ││
+│ │ Source: clinic    Ranges: (shown in app)    Version: 0.1     ││
 │ │                                                              ││
-│ │ [View Ranges] [Preview] [Activate]                          ││
+│ │ [View Ranges] [Preview] [Publish]                           ││
 │ └──────────────────────────────────────────────────────────────┘│
 │                                                                  │
 └─────────────────────────────────────────────────────────────────┘
@@ -127,8 +134,8 @@ Click **Details** on any range set to see:
 
 ```
 ┌─────────────────────────────────────────────────────────────────┐
-│ RANGES: Default Functional Ranges                                │
-│ 156 ranges total                          [Search: ________]     │
+│ RANGES: Optimal Wellness Functional                              │
+│ [n] ranges total                          [Search: ________]     │
 ├─────────────────────────────────────────────────────────────────┤
 │ Code    │ Analyte              │ Lower │ Upper │ Unit  │ Sex    │
 ├─────────┼──────────────────────┼───────┼───────┼───────┼────────┤
