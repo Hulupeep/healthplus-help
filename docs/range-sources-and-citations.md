@@ -48,16 +48,23 @@ A clinic activates one functional range set at a time. That activation does not 
 
 ## What the Source Labels Mean
 
-| Label or state | Meaning | What to do |
-|:---------------|:--------|:-----------|
-| **Applied** | This range was used for the displayed classification. | Review the source, version, and citation before relying on the classification. |
-| **Available** | This range matched the analyte but was not the selected range. | Use it for comparison or audit context. |
-| **Source missing** | A range exists but the source, citation, or provenance is incomplete. | Treat the classification as usable but incomplete for audit until the source is curated. |
-| **No reference range configured** | No conventional or functional range matched this result. | Curate a conventional range, functional range, or both before calling the result normal. |
-| **No active range set selected** | The clinic has not selected an active functional range set. | Ask an administrator to activate a functional range set. |
-| **Unit mismatch** | A range exists, but its unit cannot be safely compared to the result value. | Review the result unit and range unit before interpreting. |
-| **Expert opinion** | The range is based on clinician or system expert review rather than a stronger citation. | Accept only with appropriate clinical judgment and documentation. |
-| **Citation linked** | The range has supporting source material attached. | Open the citation when you need to verify the basis for the range. |
+A row shows a state badge (for example *Applied* or *Blocked - no active set*) and, where relevant, a separate curation pill (for example *Citation needed*). The exact badge text is shown in the "Shown as" column below.
+
+{: .important }
+**Source needed** and **Citation needed** are not the same. *Source needed* means the range has no linked provenance at all. *Citation needed* means the range does have provenance from an active range set, but its underlying citation still needs curation. The classification is usable in the *Citation needed* case; only the audit trail is incomplete.
+
+| Label or state | Shown as | Meaning | What to do |
+|:---------------|:---------|:--------|:-----------|
+| **Applied** | `Applied` | This range was used for the displayed classification. | Review the source, version, and citation before relying on the classification. |
+| **Available** | `Available` | This range matched the analyte but was not the selected range. | Use it for comparison or audit context. |
+| **Citation needed** | `Applied - citation needed` / `Available - citation needed` | The range has provenance from an active range set, but the underlying citation still needs curation. | The classification is usable. Add the missing citation to complete the audit trail. |
+| **Source needed** | `Applied - source needed` / `Available - source needed` | The range has no linked source or citation provenance at all. | Treat the classification as usable but incomplete for audit until a source is curated. |
+| **No active set** | `Blocked - no active set` | The clinic has not selected an active functional range set. | Ask an administrator to activate a functional range set. |
+| **Not in active set** | `Available - not active` | A functional range exists for this analyte, but it is not part of the active range set. | Review the active range set if this analyte should be included. |
+| **Unit mismatch** | `Blocked - unit mismatch` | A range exists, but its unit cannot be safely compared to the result value. | Review the result unit and range unit before interpreting. |
+| **No range** | `Missing` | No conventional or functional range matched this result. | Curate a conventional range, functional range, or both before calling the result normal. |
+| **Expert opinion** | `Expert opinion` | The range is based on clinician or system expert review rather than a stronger citation. | Accept only with appropriate clinical judgment and documentation. |
+| **Citation linked** | `Citation linked` | The range has supporting source material attached. | Open the citation when you need to verify the basis for the range. |
 
 ---
 
