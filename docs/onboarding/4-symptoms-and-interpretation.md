@@ -39,6 +39,28 @@ If symptoms could shift numeric ranges, the same lab value would receive differe
 
 ---
 
+## Recording Symptoms in the App
+
+Symptoms are captured from the patient's **Symptoms** tab using the **Add Symptom** button. The dialog offers two entry modes, so you can capture a canonical symptom with source evidence:
+
+- **Search symptoms** — Type to filter the catalog, or narrow it with the category selector. Results are grouped by category, and each option shows a short clinician-facing description. The catalog presents a single option per concept, so you pick one canonical symptom rather than choosing between duplicate rows.
+- **Guided prompts** — Standardized, questionnaire-derived prompts. Each prompt shows the canonical symptom it *maps to* and the *source* it comes from, which keeps symptom capture consistent and traceable.
+
+If the symptom you need isn't listed, use **Can't find your symptom? Add custom**. A custom symptom requires a **name** and a **category** — the category is mandatory so custom symptoms stay quantifiable for pattern analysis — and optionally a description and a "Related to" parent symptom for rollup.
+
+Once a symptom is selected, record its clinical detail:
+
+| Field | Options |
+|:------|:--------|
+| **Severity** (required) | None, Mild, Moderate, Severe |
+| **Frequency** | Daily, Weekly, Monthly, Intermittent |
+| **Onset date** | When the symptom began |
+| **Notes** | Free-text clinical detail |
+
+Because every recorded symptom resolves to a canonical concept, the interpretation layer can group related complaints into clusters — which is what the next sections describe.
+
+---
+
 ## How Symptoms Are Used
 
 When symptoms are recorded in the patient's profile, the interpretation layer considers them.
