@@ -117,16 +117,20 @@ Conventional ranges are not a level in this functional precedence chain. They ar
 
 ## Missing and Incomplete Sources
 
-The Explain dialog should make source gaps visible:
+The Explain dialog makes source gaps visible using the **same state badge as the lab-results table** for each range — both read from one shared source of truth, so a gap is described identically in either place. The "Shown as" column below is the exact badge text rendered in the app.
 
-| State | What it means |
-|:------|:--------------|
-| **No reference range configured** | No conventional or functional range matched this analyte in the current context. |
-| **No functional range configured** | Conventional comparison may exist, but functional classification is unavailable. |
-| **No conventional range configured** | Functional comparison may exist, but baseline lab comparison is unavailable. |
-| **No active range set selected** | The clinic has not selected a functional Named Range Set. |
-| **Unit mismatch** | A range exists, but the units cannot be safely compared. |
-| **Source missing** | A range exists, but provenance or citation details are incomplete. |
+**Source needed** and **Citation needed** are not the same. *Source needed* means the range has no linked provenance at all. *Citation needed* means the range is applied from an active range set, but its underlying citation still needs curation — the classification is still usable; only the audit trail is incomplete.
+
+| State | Shown as (badge) | What it means |
+|:------|:-----------------|:--------------|
+| **No range configured** | `Missing` / `No range` | No conventional or functional range matched this analyte in the current context. |
+| **No functional range configured** | `Missing` (functional column) | A conventional comparison may exist, but functional classification is unavailable. |
+| **No conventional range configured** | `Missing` (conventional column) | A functional comparison may exist, but baseline lab comparison is unavailable. |
+| **No active range set selected** | `Blocked - no active set` | The clinic has not selected a functional Named Range Set. |
+| **Not in active set** | `Available - not active` | A functional range exists for this analyte, but it is not part of the active range set. |
+| **Unit mismatch** | `Blocked - unit mismatch` | A range exists, but the units cannot be safely compared to the result value. |
+| **Source needed** | `Applied - source needed` / `Available - source needed` | The range has no linked source or citation provenance at all. |
+| **Citation needed** | `Applied - citation needed` / `Available - citation needed` | The range is applied from an active range set, but the underlying citation still needs curation. |
 
 For a deeper guide, see [Range Sources and Citations]({% link docs/range-sources-and-citations.md %}).
 
