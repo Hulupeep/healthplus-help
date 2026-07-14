@@ -23,17 +23,30 @@ How patient-specific factors dynamically adjust reference range interpretation.
 Patient context includes all demographic and clinical factors that influence biomarker interpretation:
 
 ### Demographic Context
-- **Age** - Pediatric, adult, geriatric considerations
-- **Sex at Birth** - Biological sex for range selection
-- **Ethnicity** - Some biomarkers have population-specific ranges
+The patient profile captures:
 
-### Reproductive Context
-- **Pregnancy Status** - Dramatically affects many biomarkers
-- **Pregnancy Stage** - First, second, third trimester
-- **Gestational Age** - Week-specific adjustments
-- **Menstrual Phase** - Follicular, ovulatory, luteal, menstrual
-- **Hormonal Contraception** - Affects hormone interpretation
-- **Menopausal Status** - Pre, peri, post-menopausal
+- **Date of Birth** - drives age-based interpretation (pediatric, adult, geriatric considerations)
+- **Sex at Birth** - `Male` or `Female`; sets baseline reference ranges and reveals the reproductive fields below when `Female`
+
+{: .note }
+Ethnicity is not a field in the current patient profile form. Only add context the app actually collects.
+
+### Reproductive Context (female patients)
+When Sex at Birth is `Female`, the profile form exposes reproductive context. The fields shown depend on the **Currently Pregnant** toggle:
+
+- **Pregnancy Status** - `Not pregnant`, `Trying to conceive`, `Pregnant`, `Postpartum`
+- **Currently Pregnant** toggle - switches the form between pregnancy fields and menstrual-cycle fields
+
+When **pregnant**, the form adds:
+
+- **Pregnancy Stage** - Preconception, Very early, First trimester (early / late), Second trimester, Third trimester, Postpartum
+- **Gestational Age (weeks)**, **Pregnancy Confirmed Date**, **Estimated Due Date**, **Gestation Tracking Method**, **Gravida**, **Para**, and **Pregnancy Notes**
+
+When **not pregnant**, the form shows menstrual-cycle context:
+
+- **Menstrual Phase** - Menstruation, Follicular, Ovulation, Luteal, Postmenopausal (or Unknown)
+- **Last Period Start Date**, **Typical Cycle Length (days)**, **Ovulation Confirmed Date**, **Cycle Phase Override**
+- **On hormonal contraception** toggle (with **Contraception Type** and **Last Stop Date**), and **Cycle Notes**
 
 ---
 
@@ -56,7 +69,10 @@ Pregnancy is the most significant context modifier in the platform. Nearly every
 
 ### Pregnancy-Adjusted Ranges
 
-#### TSH by Trimester
+{: .warning }
+The trimester and example values in the tables below are **illustrative only** — they are teaching examples, not values HealthPlus ships. The app never invents ranges: it applies the conventional and functional ranges configured for your clinic, each with its own source/citation. Treat the numbers here as a concept demonstration, and confirm actual thresholds against the configured range sets and their sources.
+
+#### TSH by Trimester (illustrative)
 
 | Trimester | Conventional | Pregnancy-Adjusted | Notes |
 |:----------|:-------------|:-------------------|:------|
@@ -85,19 +101,26 @@ Hormone levels vary dramatically across the menstrual cycle:
 
 ### Cycle Phases
 
-| Phase | Days | FSH | LH | Estradiol | Progesterone |
-|:------|:-----|:----|:---|:----------|:-------------|
-| Menstrual | 1-5 | Low | Low | Low | Low |
+The Menstrual Phase selector offers the phases below (plus **Unknown** when uncertain). The hormone directions are general physiology shown for orientation, not app-provided reference values.
+
+| Phase (as shown in app) | Approx. cycle days | FSH | LH | Estradiol | Progesterone |
+|:------------------------|:-------------------|:----|:---|:----------|:-------------|
+| Menstruation | 1-5 | Low | Low | Low | Low |
 | Follicular | 6-13 | Rising | Low | Rising | Low |
-| Ovulatory | 14-15 | Peak | Peak | Peak | Rising |
-| Luteal | 16-28 | Low | Low | Moderate | Peak |
+| Ovulation | 14-15 | Peak | Peak | Peak | Rising |
+| Luteal | 15-28 | Low | Low | Moderate | Peak |
+| Postmenopausal | n/a | High | High | Low | Low |
 
 ### Setting Cycle Context
 
+The cycle fields appear when Sex at Birth is `Female` and **Currently Pregnant** is off:
+
+- **Menstrual Phase** - Choose the best-fit phase, or leave Unknown
 - **Last Period Start Date** - First day of last menstruation
-- **Typical Cycle Length** - Days (default 28)
+- **Typical Cycle Length (days)** - Used to estimate cycle day (form allows 20-60)
 - **Ovulation Confirmed Date** - If known (BBT, OPK, etc.)
-- **Cycle Phase Override** - Manual override if known
+- **Cycle Phase Override** - Override the calculated phase when clinician assessment differs
+- **On hormonal contraception** - Reveals Contraception Type and Last Stop Date when enabled
 
 ---
 
@@ -113,6 +136,9 @@ A persona represents a clinical phenotype with specific range requirements:
 - Post-menopausal women with modified hormone ranges
 
 ### Example Personas
+
+{: .warning }
+The personas and their numeric ranges below are **illustrative examples** to show the concept — they are not preset ranges HealthPlus provides. Any persona-level range you use must come from a configured range set with its own source/citation.
 
 #### Athletic Female 25-40
 
