@@ -18,6 +18,11 @@ The core concept of the HealthPlus platform—understanding the difference betwe
 
 ---
 
+{: .warning }
+> **Every numeric range on this page is an illustrative example, not a value HealthPlus ships or applies.** The platform only ever applies ranges that come from a **configured, sourced** reference set (a conventional catalog, an active functional Named Range Set, or a patient/persona override) — each with its own citation. The example bounds below (TSH, ferritin, vitamin D, thyroid panel, age/pregnancy modifiers) are teaching aids to explain the *concept*; they are not clinic defaults and must not be read as recommended thresholds. Always confirm the actual applied range and its source in the app's range explainability trail.
+
+---
+
 ## What Are Conventional Ranges?
 
 **Conventional reference ranges** (also called "normal ranges" or "reference intervals") are statistical constructs derived from population sampling.
@@ -61,6 +66,9 @@ Functional ranges:
 ---
 
 ## Side-by-Side Comparison
+
+{: .note }
+> The bounds in the tables below are **illustrative** — chosen to show how a functional range can be tighter than a conventional one. They are not values HealthPlus ships; the app shows the actual applied bounds and their citation per result.
 
 ### Example: TSH (Thyroid Stimulating Hormone)
 
@@ -155,22 +163,19 @@ Not all functional ranges are created equal. The platform applies ranges in orde
 
 ## Context Modifiers
 
-### Age Adjustments
-| Age Group | TSH Upper Bound |
-|:----------|:----------------|
-| 18-50 | 2.0 mIU/L |
-| 51-70 | 2.5 mIU/L |
-| 71+ | 3.0 mIU/L |
+A range's bounds can vary with patient context (age, sex, pregnancy, menstrual phase). HealthPlus's range model **supports** these dimensions, but a given result only ever has a context-specific range applied **when that stratification is actually configured in the sourced range set** for that analyte. Where a range set does not stratify a dimension, the same bounds apply across it.
 
-### Sex Adjustments
-- Ferritin ranges differ significantly by sex
-- Hormone ranges are sex-specific
-- Hemoglobin has sex-based thresholds
+{: .warning }
+> **Important honesty note.** The example schedules below are *illustrative only*. HealthPlus does **not** ship a built-in age- or trimester-specific TSH schedule, and the currently seeded functional ranges are **not** yet stratified by age, pregnancy, or menstrual phase — they display Age = "All" with identical male/female values (tracked in app issue [`healthplus#38`](https://github.com/Hulupeep/healthplus/issues/38)). Do not treat any number here as a threshold the platform applies. The applied range and its source are always shown in the result's explainability trail.
 
-### Pregnancy Adjustments
-- First trimester: Lower TSH threshold (0.1 - 2.5 mIU/L)
-- All trimesters: Higher ferritin requirements
-- Gestational-age specific ranges for many markers
+### Age
+Range sets *may* define different bounds for different age brackets (e.g. a tighter functional TSH ceiling in younger adults). Whether that stratification exists depends entirely on the configured, sourced range set — it is not a platform default.
+
+### Sex
+Range sets commonly differ by sex where clinically appropriate (ferritin, sex hormones, hemoglobin). Again, the specific values come from the sourced set, not from HealthPlus.
+
+### Pregnancy & menstrual phase
+The model can carry pregnancy- and menstrual-phase-specific ranges (e.g. trimester-adjusted thresholds), but these apply only when a sourced range set provides them for the analyte. HealthPlus invents no trimester or cycle-phase values of its own.
 
 ---
 
@@ -179,6 +184,9 @@ Not all functional ranges are created equal. The platform applies ranges in orde
 **Patient:** 42-year-old female
 **Symptoms:** Fatigue, weight gain, brain fog, cold hands
 **Conventional Labs:** All "normal"
+
+{: .note }
+> Illustrative scenario. The values below are teaching examples, not applied clinic ranges.
 
 | Test | Value | Conventional | Functional | Flag |
 |:-----|:------|:-------------|:-----------|:-----|
