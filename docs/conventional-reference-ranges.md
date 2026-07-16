@@ -116,14 +116,21 @@ Replacing prior provider ranges should be a deliberate admin action. A single up
 
 ## What Users Should See on Lab Results
 
-For each result, the Conventional Range column should show one of:
+For each result, the Conventional Range column shows a state badge alongside the range values. The exact badge text is listed in the "Shown as" column below.
 
-| Display | Meaning |
-|:--------|:--------|
-| A numeric range | A matching conventional range was found. |
-| `N/A` or no configured range | No matching conventional range was found. |
-| Unit mismatch message | A range exists but cannot be compared safely. |
-| Source warning | A range exists but provenance is incomplete. |
+| State | Shown as | Meaning |
+|:------|:---------|:--------|
+| **Applied** | `Applied` | A matching conventional range was found and used for the conventional status. The range values are shown beside the badge. |
+| **Available** | `Available` | A matching conventional range exists but was not the applied source for this row. |
+| **Source needed** | `Applied - source needed` / `Available - source needed` | A range was found, but it has no linked source or citation provenance at all. |
+| **Citation needed** | `Applied - citation needed` / `Available - citation needed` | The range has provenance, but its underlying citation still needs curation. |
+| **Unit mismatch** | `Blocked - unit mismatch` | A range exists, but its unit cannot be safely compared to the result value. |
+| **Missing** | `Missing` | No matching conventional range was found. The result is not classified against a conventional range. |
+
+{: .note }
+**Source needed** and **Citation needed** are not the same. *Source needed* means the range has no linked provenance at all. *Citation needed* means provenance exists (for example a provider or clinic catalog reference) but the underlying citation is still pending. The conventional status is usable in the *Citation needed* case; only the audit trail is incomplete.
+
+The *No active set* and *Not in active set* states apply only to the Functional Range column, not to conventional ranges. See [Named Range Sets]({% link docs/named-range-sets.md %}) for those.
 
 Click **Explain** to see where the range came from and whether a source or citation is linked.
 
