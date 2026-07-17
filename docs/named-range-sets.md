@@ -153,17 +153,27 @@ If source support is missing, publish is blocked until the gap is resolved.
 
 ## Explainability Integration
 
-The Explain dialog shows which functional source was used:
+For each result, the Explain dialog's **Range sources** section renders a card for the functional range that was used. The card shows a title, the range bounds, a state badge, and a small set of labelled fields (values below are illustrative):
 
 ```
-Functional range source: Optimal Wellness Functional v1.0
-Scope: Global functional range
-Bounds: 0.5 - 2.0 mIU/L
-Source status: Citation linked
-Reason applied: No patient or persona override matched this result.
+Functional range                              [ Applied ]
+0.5 – 2.0 mIU/L
+
+Classification   Normal
+Source           Optimal Wellness Functional
+Range set        Optimal Wellness Functional v1.0
+Citation         Optimal Thyroid Function Study, 2022
+
+No patient or persona override matched this result, so the clinic's active functional set was applied.
 ```
 
-If no functional range is available, the Explain dialog should say so directly and the result should be treated as unclassified for functional status.
+- The **badge** (`Applied` / `Available`) is the same state badge shown in the lab-results table — both read from one shared source of truth.
+- **Classification** is the functional flag (`Normal`, `Low`, `High`, or `Unclassified`).
+- **Source** and **Range set** identify the functional set the range came from; **Citation** shows the linked evidence. When provenance is incomplete the badge instead reads `Applied - source needed` (no provenance at all) or `Applied - citation needed` (applied from an active set, citation still pending).
+
+If no functional range is available, the card shows a `Missing` badge with `Unclassified` classification and `No range configured` as the source, and the result is treated as unclassified for functional status.
+
+For the full list of provenance badges and the *source needed* vs *citation needed* distinction, see [Explainability]({% link docs/explainability.md %}).
 
 ---
 
