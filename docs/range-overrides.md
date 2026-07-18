@@ -41,48 +41,44 @@ Standard functional ranges work for most patients, but some situations require c
 
 ## Creating a Patient Override
 
-### Step 1: Identify the Need
+{: .important }
+> **What the app does today.** HealthPlus does not yet expose a "create override" form on the lab-results screen. A result's **Explain** dialog offers **Add clinician note** (under *Clinician commentary*) to record context on a range — it does not create a new range, and there is no **Add Override** button. Patient-specific overrides that already exist in a clinic's data appear in the **Pending Promotions** card (below), where they can be reviewed and promoted. The panel below **illustrates the override concept only** — it is not a current app screen, and its analyte, bounds, names, and rationale are placeholders.
 
-While reviewing lab results, you notice:
+### When a Patient Override Applies
+
+A patient-specific override records a range that applies to a single patient and takes precedence over persona and global functional ranges. It is the right tool when:
+
 - The standard functional range doesn't fit this patient
-- The patient is symptomatic at levels within "normal" range
-- Clinical judgment suggests different thresholds
+- The patient is symptomatic at levels within the "normal" range
+- Clinical judgment supports a different threshold, with documented rationale
 
-### Step 2: Access the Override Interface
-
-1. Find the analyte that needs adjustment
-2. Click the **Explain** button
-3. In the explainability dialog, click **Add Override**
-
-### Step 3: Enter Override Details
+### Illustrative Override (concept — not a current screen)
 
 ```
 ┌─────────────────────────────────────────────────────────────────┐
-│ CREATE PATIENT OVERRIDE                                         │
+│ PATIENT OVERRIDE — ILLUSTRATIVE ONLY                            │
 ├─────────────────────────────────────────────────────────────────┤
 │ Analyte: TSH - Thyroid Stimulating Hormone                      │
 │                                                                 │
-│ Current Functional Range: 0.5 - 2.0 mIU/L                       │
+│ Functional Range (example): 0.5 - 2.0 mIU/L                     │
 │                                                                 │
-│ New Patient-Specific Range:                                     │
+│ Patient-Specific Range (example):                               │
 │ Lower Bound: [0.5   ] mIU/L                                     │
 │ Upper Bound: [1.5   ] mIU/L                                     │
 │                                                                 │
-│ Your Name: [Dr. Sarah Chen            ]                         │
+│ Reviewer: [Example reviewer           ]                         │
 │                                                                 │
-│ Clinical Rationale:                                             │
+│ Clinical Rationale (example):                                   │
 │ ┌─────────────────────────────────────────────────────────────┐ │
-│ │ Patient reports fatigue and brain fog when TSH exceeds     │ │
-│ │ 1.5 mIU/L. Has responded well to optimization. Hashimoto's │ │
-│ │ diagnosis with TPO antibodies positive.                    │ │
+│ │ Documented symptom response guiding a tighter target for   │ │
+│ │ this individual patient.                                   │ │
 │ └─────────────────────────────────────────────────────────────┘ │
 │                                                                 │
-│ [Cancel] [Create Override]                                      │
 └─────────────────────────────────────────────────────────────────┘
 ```
 
-{: .important }
-Always document the clinical rationale for overrides.
+{: .note }
+The numbers above are placeholders showing the *shape* of an override. HealthPlus only applies configured, sourced ranges — it never invents range values. Always document the clinical rationale for any override.
 
 ---
 
@@ -121,13 +117,16 @@ The Promotion Dialog opens.
 
 ### Step 3: Provide Details
 
-- **Reviewer Name** - Who is approving this promotion
-- **Persona ID** - Unique identifier for the cohort (e.g., `hashimotos-treated`)
-- **Rationale** - Why this range should be promoted
+In the **Promote Range Override** dialog:
+
+- **Target Scope** - choose **Persona** or **Global**
+- **Reviewer** - who is approving this promotion (required)
+- **Persona identifier** - the cohort id, shown only for **Persona** scope (e.g., `athletic-female-30-40`)
+- **Rationale (optional)** - why this range is being promoted
 
 ### Step 4: Complete Promotion
 
-After promotion:
+Click **Promote range** to confirm. After promotion:
 - The range is available for the specified scope
 - Version history shows the promotion event
 - Audit trail captures the action
