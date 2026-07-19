@@ -78,17 +78,22 @@ If one or more members are missing source support:
 
 ## Reading Source States on Lab Results
 
-After a range set is active, users may see source states on lab result rows and in the Explain dialog.
+After a range set is active, each lab result row shows a functional range badge, and the same state is mirrored in the Explain dialog. The text below is exactly what the app renders: both the Lab Results table and the Explain dialog read the same presentation logic, so the badge and the Explain view never disagree.
 
-| State | Meaning |
-|:------|:--------|
-| **Citation linked** | The range has source material attached. |
-| **Expert opinion source** | The range is supported by expert or clinic review. Review the note or citation detail. |
-| **Source missing** | A range exists, but provenance is incomplete. |
-| **No range configured** | No matching functional or conventional range exists for this result context. |
-| **No active range set selected** | No functional set is active for the clinic. |
+| Shown as | Meaning | Curation action |
+|:---------|:--------|:----------------|
+| **Applied** / **Available** | The functional range is resolved and has a linked citation. `Applied` = used for this result's status; `Available` = resolved but not the comparison currently applied. | None — fully sourced. |
+| **Applied - citation needed** / **Available - citation needed** | The range has provenance (an active range set or a citation record) but the underlying citation still needs curation. | Add citation. |
+| **Applied - source needed** / **Available - source needed** | The range is shown but has no identifiable provenance yet. | Add source. |
+| **Available - not active** (status *Not in active set*) | A functional range exists for this analyte but is not a member of the active set. | Review active set. |
+| **Blocked - no active set** (status *No active set*) | No functional range set is active for the clinic. | Activate a range set. |
+| **Blocked - unit mismatch** | The result unit cannot be compared to the range's unit. | Review units. |
+| **Missing** (status *No range*) | No functional range is configured for this result context. | Add functional range. |
 
-Missing source should be handled as a curation task, not as a normal result.
+{: .note }
+`Not in active set` and `No active set` are **functional-only** states — they describe range-set membership and never appear for a conventional reference range. Conventional rows carry their own separate source states.
+
+Anything other than a plain `Applied` / `Available` should be handled as a curation task, not as a normal result. Note that "citation needed" and "source needed" are distinct: *source needed* means no provenance is known yet, while *citation needed* means provenance exists (an applied range set) but its underlying citation is still uncurated.
 
 ---
 
