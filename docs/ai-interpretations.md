@@ -23,9 +23,12 @@ Generate clinical summaries that synthesize flagged results into actionable insi
 The AI interpretation system analyzes a patient's lab results and generates:
 - Clinical summaries synthesizing multiple flagged results
 - Pattern identification across biomarkers
-- Evidence-based intervention suggestions
+- Bounded, guardrailed recommendations grounded in configured ranges and clinic-authored guidance
 - Patient-friendly explanations (optional mode)
 - Decision traces showing range sources, symptoms, coverage gaps, and guardrails
+
+{: .important }
+HealthPlus only surfaces configured, sourced ranges and clinic-authored, sourced guidance. It does **not** invent medical values or generate medication dosing. Any specific numbers shown on this page are illustrative formatting examples, not clinical advice.
 
 ---
 
@@ -35,9 +38,9 @@ The AI interpretation system analyzes a patient's lab results and generates:
 
 Designed for healthcare providers:
 - Technical medical terminology
-- Detailed pathophysiology explanations
-- Treatment recommendations with dosing
-- Citation references for claims
+- Pattern explanations grounded in the classified findings
+- Bounded recommendations tied to classification strength and coverage gaps (no invented dosing)
+- Source and citation status for the ranges and clinic-authored guidance used
 
 ### Patient Mode
 
@@ -61,41 +64,48 @@ Click **Generate AI Interpretation** to start the process.
 
 ### Step 3: Review the Draft
 
-The AI generates a comprehensive summary:
+The AI generates a comprehensive summary. The layout below is an **illustrative
+formatting example only** — the values are placeholders, not real patient data or
+clinical advice. The generated recommendations are bounded, guardrailed statements
+grounded in the classified findings and coverage gaps; HealthPlus does not invent
+prognoses, thresholds, or medication dosing.
 
 ```
 ┌─────────────────────────────────────────────────────────────────┐
-│ AI-GENERATED CLINICAL INTERPRETATION                            │
+│ AI-GENERATED CLINICAL INTERPRETATION (illustrative layout)      │
 ├─────────────────────────────────────────────────────────────────┤
 │                                                                 │
 │ SUMMARY                                                         │
-│ This 42-year-old female presents with a pattern consistent     │
-│ with suboptimal thyroid function. While all values fall within │
-│ conventional reference ranges, the functional analysis reveals │
-│ a concerning pattern.                                           │
+│ Counts of clear-abnormal, borderline, normal, and unclassified │
+│ results, with active symptom context when symptoms are         │
+│ recorded, and disclosure when range coverage is incomplete.    │
 │                                                                 │
-│ KEY FINDINGS                                                    │
-│ • TSH: 3.8 mIU/L (Functional High) - Pituitary compensation    │
-│ • Free T4: 0.9 ng/dL (Functional Low) - Reduced production     │
-│ • Free T3: 2.3 pg/mL (Functional Low) - Conversion impairment  │
+│ KEY FINDINGS (each grounded in an applied range)               │
+│ • <analyte>: <value> <unit> (<classification>)                 │
+│   - applied range + source/version, distance from boundary     │
 │                                                                 │
 │ PATTERN ANALYSIS                                                │
-│ The combination of elevated TSH with low-normal T4 and T3      │
-│ suggests the hypothalamic-pituitary axis is working harder     │
-│ to maintain circulating hormone levels. This pattern often     │
-│ precedes overt hypothyroidism by 5-10 years.                   │
+│ Describes the classified pattern, bounded by the AI guardrail  │
+│ for each decision. Borderline findings are stated as borderline│
+│ and not overstated. No uncited prognosis is generated.         │
 │                                                                 │
-│ RECOMMENDATIONS                                                 │
-│ 1. Assess thyroid antibodies (TPO, TgAb) to evaluate for       │
-│    Hashimoto's thyroiditis                                     │
-│ 2. Optimize selenium (200-400 mcg daily) to support            │
-│    T4→T3 conversion                                             │
-│ 3. Evaluate iron status (ferritin >50 ng/mL goal)              │
-│ 4. Consider LDN or thyroid support if symptoms persist         │
+│ RECOMMENDATIONS (bounded, non-dosing)                          │
+│ 1. Treat borderline findings as context signals, not major     │
+│    abnormal results in isolation.                              │
+│ 2. Resolve missing range coverage and unit mappings before     │
+│    generating stronger clinical conclusions.                   │
+│ 3. Review symptoms against thyroid, iron, inflammation,        │
+│    nutrient, and metabolic markers once classified.           │
+│ 4. Compare with prior results when available to determine      │
+│    whether values are stable, improving, or declining.        │
 │                                                                 │
 │ [Edit] [Save] [Regenerate]                                      │
 └─────────────────────────────────────────────────────────────────┘
 ```
+
+Clinic-authored guidance (see the analyte guidance authoring flow) can add sourced,
+reviewed implication copy for a specific range state — the AI consumes that guidance
+under its evidence level (e.g. `clinic_reviewed`) rather than inventing its own.
 
 ### Step 4: Edit and Attribute
 
@@ -143,11 +153,11 @@ INTERPRETATION HISTORY
 
 Version 3 (Current) - 2024-02-15
 • Edited by: Dr. Sarah Chen
-• Changes: Added selenium dosing recommendation
+• Changes: Added clinician note on symptom context
 
 Version 2 - 2024-02-14
 • Edited by: Dr. Michael Ross
-• Changes: Clarified T4→T3 conversion pathway
+• Changes: Clarified borderline wording for the functional finding
 
 Version 1 - 2024-02-14
 • Generated by: AI System
@@ -166,7 +176,7 @@ Version 1 - 2024-02-14
 1. **Check accuracy** - Verify the AI correctly identified flagged values
 2. **Validate logic** - Ensure the pattern analysis makes clinical sense
 3. **Review range coverage** - Confirm missing or unit-mismatched ranges were not counted as normal
-4. **Review recommendations** - Confirm dosing and interventions are appropriate
+4. **Review guidance provenance** - Confirm any clinic-authored guidance used is sourced and reviewed; add clinical judgement for treatment decisions yourself
 5. **Add nuance** - Include patient-specific factors the AI may have missed
 
 ### When to Regenerate
