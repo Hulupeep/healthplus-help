@@ -47,9 +47,12 @@ The pre-classification step should identify:
 |:---------------|:--------|
 | **Normal** | The result is inside the applied range. |
 | **Borderline low or high** | The result is outside the boundary but close enough that it should not be overstated. |
-| **Clear abnormal low or high** | The result is meaningfully outside the applied range. |
+| **Clear abnormal low or high** | The result is meaningfully outside the applied range. HealthPlus grades how far out the value sits, from a plain low/high through marked to critical. |
 | **Unknown range** | No matching range was configured. |
 | **Unit mismatch** | A range exists, but the units cannot be safely compared. |
+| **Data conflict** | The available data or sources disagree, so the result cannot be trusted as classified. |
+
+`Unknown range`, `Unit mismatch`, and `Data conflict` are the three reasons a result is treated as **unclassified** — it is never counted as normal.
 
 ---
 
@@ -96,12 +99,16 @@ The decision trace should show:
 
 ## Unclassified Results
 
-Unclassified results are results that cannot be fully compared because a range is missing or incompatible.
+Unclassified results are results that cannot be fully compared for one of three reasons:
+
+- **No matching range was configured** (unknown range).
+- **A range exists, but the units cannot be safely compared** (unit mismatch).
+- **The available data or sources disagree** (data conflict).
 
 They should be handled explicitly:
 
 - Do not count them as normal.
-- List them under range coverage gaps.
+- List them under range coverage gaps, grouped by reason — missing configured ranges, unit mappings needed, and data conflicts.
 - Explain why they are unclassified.
 - Recommend curation when clinically relevant.
 
@@ -129,6 +136,7 @@ A strong AI interpretation should include:
 |:----------|:----------|
 | HDL is 0.5 mg/dL below the functional target | Say borderline; do not imply a major abnormality in isolation. |
 | HSCRP has no configured range | Say unclassified; do not count as normal. |
+| A marker's sources disagree on the value or range | Say unclassified due to a data conflict; do not classify it as normal. |
 | Several lipid markers have no matching range | Lower interpretation confidence and recommend range curation. |
 | Symptoms are present but related markers are unclassified | State that symptom-linked interpretation is limited. |
 
