@@ -23,9 +23,9 @@ Understanding the architecture and capabilities of the HealthPlus Lab Results Da
 The HealthPlus Lab Results Dashboard serves as a bridge between conventional laboratory medicine and functional medicine practice. It provides:
 
 1. **Intelligent Range Interpretation** - Automatically applies functional reference ranges to conventional lab results
-2. **Context-Aware Analysis** - Adjusts interpretations based on patient demographics, pregnancy status, and clinical context
+2. **Context-Aware Analysis** - Surfaces patient demographics, reproductive context, and clinical persona so range selection and interpretation reflect the available context
 3. **Explainable AI** - Transparent reasoning for every flag and recommendation
-4. **Treatment Protocol Generation** - AI-assisted clinical interpretations and intervention suggestions
+4. **AI-Assisted Interpretation Summaries** - Generated clinical summaries with generic, bounded (non-dosing) next-step recommendations; the platform never generates dosing or specific treatment protocols
 5. **Audit Trail** - Complete version history and citation tracking for clinical documentation
 
 ---
@@ -110,14 +110,16 @@ Every lab result shows both conventional and functional ranges side-by-side:
 | TSH | 3.2 mIU/L | 0.5 - 5.0 | 0.5 - 2.0 | **Functional High** |
 | Ferritin | 45 ng/mL | 12 - 150 | 50 - 150 | **Functional Low** |
 
-### 2. Context-Sensitive Adjustments
+*The values above are illustrative only. HealthPlus applies only configured, sourced ranges and does not invent range values.*
 
-The platform automatically adjusts reference ranges based on:
-- **Age** - Pediatric, adult, and geriatric ranges
-- **Sex** - Sex-specific reference intervals
-- **Pregnancy** - Trimester-specific adjustments
-- **Menstrual Phase** - Cycle-dependent hormone ranges
+### 2. Range Selection by Available Context
+
+Reference-range selection can key on the dimensions defined in a range:
+- **Age** - Age-bounded ranges (the functional set shipped today uses an adult 18–100 bound)
+- **Sex** - Sex-specific reference intervals where defined
 - **Clinical Personas** - Custom cohort-specific ranges
+
+Range authoring additionally supports **pregnancy status** and **menstrual phase** dimensions, and patient reproductive context is captured on the profile. However, the functional ranges seeded today are **not** stratified by trimester or menstrual phase—they apply the adult range regardless. Trimester-specific and cycle-dependent ranges are therefore a supported authoring capability, not out-of-the-box behavior.
 
 ### 3. Explainability at Every Level
 
@@ -134,8 +136,10 @@ Click "Explain" on any result to see:
 Generate clinical summaries that:
 - Synthesize multiple flagged results
 - Identify patterns across biomarkers
-- Suggest evidence-based interventions
+- Offer generic, bounded next-step recommendations (e.g. resolve missing range coverage before drawing stronger conclusions, review symptoms against relevant marker groups, compare with prior results)—**never dosing or specific treatment protocols**
 - Provide patient-friendly explanations (optional mode)
+
+Interpretation narratives are guardrailed and grounded in clinic-authored, sourced guidance; the platform does not invent medical values, dosing, or interventions.
 
 ---
 
@@ -145,10 +149,11 @@ The platform uses a tabbed interface for comprehensive patient management:
 
 | Tab | Purpose |
 |:----|:--------|
-| **Patient** | Demographics, pregnancy context, clinical history |
+| **Patient** | Demographics, reproductive context, clinical history |
+| **Symptoms** | Patient-reported and clinician-entered symptoms |
 | **Lab Results** | All test results with dual-range interpretation |
 | **Interpretations** | AI-generated clinical summaries |
-| **Protocol** | Treatment recommendations and interventions |
+| **Protocol** | Treatment planning (clinician-authored) |
 | **Side Effects** | Tracking and management |
 | **Follow-up** | Scheduling and monitoring |
 
@@ -158,7 +163,7 @@ The platform uses a tabbed interface for comprehensive patient management:
 
 ### Clinicians
 - Full access to all interpretation features
-- Can create and promote range overrides
+- Can review pending range-override promotions and promote overrides to persona or global scope (the app does not currently expose an in-app screen to *create* a patient override)
 - Can edit AI interpretations with attribution
 - Access to explainability and audit trails
 
