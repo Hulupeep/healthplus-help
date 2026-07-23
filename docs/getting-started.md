@@ -62,9 +62,16 @@ You have two options:
 ### Step 4: Review Flagged Results
 
 After upload:
-1. Review the dual-range display
-2. Look for **Functional High** or **Functional Low** flags
-3. Click **Explain** to understand why a result was flagged
+1. Review the dual-range display — each row compares the value against the
+   **Conventional Range** and the **Functional Range** side by side.
+2. Read the **Status** column. It shows **Normal**, **Low**, or **High** when the
+   applied range can classify the result (and **Unclassified** or **N/A** when it
+   cannot). A functional concern surfaces as a **High** or **Low** status driven by
+   the tighter Functional Range, so a result inside the conventional interval can
+   still read **High** functionally.
+3. Note which range drove that status: the applied range cell carries an
+   **Applied** badge, while the other range shows **Available**.
+4. Click **Explain** to understand why a result was flagged and which range was applied.
 
 ### Step 5: Generate Interpretation
 
@@ -85,6 +92,7 @@ The dashboard uses a tabbed interface:
 | Tab | Purpose | Status |
 |:----|:--------|:-------|
 | **Patient** | Demographics, pregnancy/cycle context | Available |
+| **Symptoms** | Patient-reported symptoms and questionnaire entry | Available |
 | **Lab Results** | All test results with dual ranges | Available |
 | **Interpretations** | AI-generated clinical summaries | Available |
 | **Protocol** | Treatment recommendations and intervention plans | Placeholder — not yet available |
@@ -101,19 +109,26 @@ The dashboard uses a tabbed interface:
 Each result row shows:
 
 ```
-┌─────────────────────────────────────────────────────────────────┐
-│ Analyte       │ Value    │ Conventional │ Functional │ Status  │
-├───────────────┼──────────┼──────────────┼────────────┼─────────┤
-│ TSH           │ 3.2      │ 0.5 - 5.0    │ 0.5 - 2.0  │ FUNC    │
-│ Thyroid Stim..│ mIU/L    │              │            │ HIGH    │
-└─────────────────────────────────────────────────────────────────┘
+┌────────────────────────────────────────────────────────────────────────┐
+│ Analyte  │ Value      │ Conventional Range │ Functional Range │ Status  │
+├──────────┼────────────┼────────────────────┼──────────────────┼─────────┤
+│ TSH      │ 3.2 mIU/L  │ 0.5 - 5.0          │ 0.5 - 2.0        │ High    │
+│          │            │ [Available]        │ [Applied]        │         │
+└────────────────────────────────────────────────────────────────────────┘
 ```
 
 - **Analyte**: Test name and full description
 - **Value**: The measured result with units
-- **Conventional Range**: Standard laboratory reference
-- **Functional Range**: Optimal health threshold
-- **Status**: Flag indicating interpretation
+- **Conventional Range**: Standard laboratory reference, with an **Applied** or
+  **Available** badge (and a *source needed* / *citation needed* note when its
+  provenance is incomplete)
+- **Functional Range**: The clinic's optimal-health threshold, badged the same way
+- **Status**: The classification of the applied range — **Normal**, **Low**,
+  **High**, **Unclassified**, or **N/A**
+
+In the example above TSH is 3.2 mIU/L: inside the conventional interval (0.5–5.0)
+but above the functional upper bound (2.0), so the Functional Range is **Applied**
+and the Status reads **High**.
 
 ---
 
