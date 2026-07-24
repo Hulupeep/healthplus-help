@@ -47,6 +47,15 @@ Functional range sets have lifecycle states.
 {: .important }
 Published functional range sets are immutable. To change a published set, create or work from a draft version, then publish the new version after review.
 
+### Unlocking a Published Set: Create Editable Version
+
+When you open the ranges for a **published** or **active** set, the page is read-only: rows show a **View** action (not **Edit**), and there is **no Add Range button**. To make changes you first click **Create Editable Version** at the top of the ranges page.
+
+Clicking **Create Editable Version** creates (or resumes) a draft version and takes you to that draft's ranges page. Only there do the **Add Range** button and the per-row **Edit** action appear. A blue banner confirms *"This editable version is a draft and is not active for interpretation."*
+
+{: .note }
+This is the step to remember when a published set's rows look uneditable — you are not stuck, you just need to create the editable draft version first.
+
 ---
 
 ## Editing Creates a New Version
@@ -67,9 +76,9 @@ This is why the save message may say that the range was updated as a new immutab
 ## Adding a Functional Range
 
 1. Open **Admin** -> **Functional Range Sets**.
-2. Open the draft range set.
-3. Click **View Ranges**.
-4. Click **Add Range**.
+2. Click **View Ranges** on the set you want to change.
+3. If the set is **published or active**, click **Create Editable Version** first — this creates or resumes a draft and opens its ranges page. (If you are already on a **draft** version, skip this step.)
+4. Click **Add Range**. (This button only appears on a draft version.)
 5. Select the analyte.
 6. Enter lower bound, upper bound, unit, sex filter, and age filter where applicable.
 7. Enter a **Change Reason**.
@@ -82,8 +91,8 @@ The change reason explains why this range belongs in the draft. It is stored in 
 
 ## Editing a Functional Range
 
-1. Open the draft range set.
-2. Open the range row you want to change.
+1. Open the range set and click **View Ranges**. If it is published or active, click **Create Editable Version** first (see above) so the rows become editable.
+2. On the draft version, click **Edit** on the range row you want to change. (Published rows show **View** only and cannot be edited.)
 3. Update the bounds, unit, sex filter, age filter, source citation, or source note.
 4. Enter a **Change Reason**.
 5. Save.
@@ -94,11 +103,10 @@ After save, the page may navigate to a new range version. That is expected becau
 
 ## Removing a Functional Range
 
-1. Open the draft range set.
-2. Open the range row you want to remove.
-3. Click **Delete**.
-4. Enter or confirm the audit reason.
-5. Confirm removal.
+1. On the draft version, open the range row you want to remove. (Removal is only available on a draft — create an editable version first if needed.)
+2. Open the **Delete Range** section.
+3. Enter an **Audit Reason**.
+4. Type `DELETE` to confirm, then click **Delete**.
 
 Removing a member from a draft set does not delete the historical range row. It removes that member from the draft version and records an audit event.
 
