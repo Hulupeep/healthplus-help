@@ -41,7 +41,7 @@ NutrEval requires two specimen types:
 | **FMV Urine** | First morning void | Organic acids, B-vitamin markers, dysbiosis markers |
 | **Blood (Serum/Plasma)** | Standard draw | Elements, fatty acids, amino acids |
 
-The platform tracks both specimen types and ensures appropriate ranges are applied to each analyte based on its specimen source.
+Each range definition carries its own `specimen_type`, so urine and blood analytes can hold distinct ranges. Note that HealthPlus selects which range to apply by patient **demographics** (see *How NutrEval Results Are Processed* below), not by specimen — `specimen_type` is recorded on the definition, it is not itself a matching dimension.
 
 ---
 
@@ -119,9 +119,16 @@ Organic acids are metabolic intermediates that provide insight into cellular fun
 
 ---
 
-## Interpretation Scores
+## Interpretation Scores (NutrEval report concepts)
 
-NutrEval provides functional need scores that aggregate related markers:
+> **Illustrative only — not computed by HealthPlus.** The functional need scores below
+> are aggregate concepts from Genova's own NutrEval report; HealthPlus does **not**
+> calculate them. There is no score-aggregation engine in the platform — HealthPlus
+> classifies each uploaded analyte value against its configured, sourced range and does
+> not combine markers into aggregate "need" scores. They are included here to explain
+> what the NutrEval report itself presents.
+
+NutrEval's own report groups related markers into functional need scores:
 
 | Score | What It Assesses |
 |:------|:-----------------|
@@ -132,7 +139,7 @@ NutrEval provides functional need scores that aggregate related markers:
 | Toxic Exposure | Environmental toxin burden |
 | Oxidative Stress | Free radical damage |
 
-These scores help prioritize interventions.
+On the NutrEval report these scores help prioritize interventions.
 
 ---
 
@@ -140,24 +147,29 @@ These scores help prioritize interventions.
 
 ```mermaid
 flowchart TD
-    A[NutrEval Results Received] --> B{Specimen Type?}
-    B -->|Urine| C[Apply Organic Acid Ranges]
-    B -->|Blood| D[Apply Element/Fatty Acid Ranges]
-    C --> E[Identify Range Framework: Genova]
-    D --> E
-    E --> F[Match Patient Context]
-    F --> G[Calculate Functional Scores]
-    G --> H[Generate Classification]
+    A[NutrEval Results Uploaded] --> B[Align each row to a canonical analyte]
+    B --> C[Match against ranges in the active Named Range Set]
+    C --> D[Pick the most specific range for the patient's demographics]
+    D --> E[Classify each value vs the applied range]
+    E --> F[Generate the interpretation summary]
 ```
+
+> **How ranges are actually chosen.** HealthPlus does not have a "Genova range
+> framework." Ranges are matched by patient **demographics** (sex, age, and — where such
+> ranges are authored — pregnancy and menstrual phase) against the clinic's active Named
+> Range Set. Named Range Sets express a clinical philosophy, not a lab or methodology:
+> the app deliberately rejects naming a set `NutrEval`, `Genova`, `DUTCH`, or `ZRT`
+> ("Genova is a laboratory, not a clinical philosophy"). Individual range definitions
+> instead carry a `specimen_type`.
 
 ### Dual-Specimen Handling
 
 The platform:
 
-1. **Separates results by specimen type** — Urine analytes get urine ranges, blood analytes get blood ranges
-2. **Applies Genova range framework** — NutrEval-specific reference intervals
-3. **Calculates aggregate scores** — Combines related markers into functional need scores
-4. **Integrates with Named Range Set** — Functional interpretation layered on top
+1. **Records each analyte's specimen** — Range definitions carry a `specimen_type`, so a urine analyte and a blood analyte can hold distinct ranges
+2. **Matches ranges by demographics** — The most specific applicable range for the patient's sex/age (and any authored pregnancy/menstrual ranges) wins; there is no "Genova framework" keying and specimen is not itself a matching dimension
+3. **Classifies each value against its applied range** — Using the configured, sourced ranges; HealthPlus does not combine markers into aggregate functional-need scores
+4. **Integrates with the Named Range Set** — Functional interpretation layered on top
 
 ---
 
@@ -193,10 +205,10 @@ NutrEval evaluates:
 
 NutrEval results work within the Named Range Set system:
 
-1. **Genova ranges are the methodology baseline**
-2. **Named Range Set provides interpretive philosophy**
-3. **Functional scores inform clinical summary**
-4. **Interpretation explains nutritional patterns**
+1. **The clinic selects a Named Range Set** — This establishes the interpretive philosophy (a Named Range Set is a clinical worldview, never a lab or methodology name like "NutrEval" or "Genova")
+2. **NutrEval analytes resolve to canonical analytes** — Uploaded rows align to the platform's canonical catalog; each range definition carries its own `specimen_type`
+3. **Context resolution applies** — Patient demographics (sex, age, and any authored pregnancy/menstrual ranges) refine which range is applied
+4. **Interpretation classifies each value against its applied range** — Using the configured, sourced ranges; the platform does not compute NutrEval functional-need scores
 
 ---
 
@@ -205,6 +217,6 @@ NutrEval results work within the Named Range Set system:
 - NutrEval combines urine organic acids with blood elements and fatty acids
 - Organic acids reveal cellular metabolism and gut health
 - Elements assess nutritional status and toxic burden
-- Functional scores aggregate related markers for clinical prioritization
-- The platform handles dual-specimen testing with appropriate range framework per analyte
+- Functional-need scores (Microbiome Support, Mitochondrial Dysfunction, …) are concepts from Genova's own NutrEval report, not values HealthPlus calculates
+- HealthPlus classifies uploaded NutrEval values against configured, sourced ranges matched by patient demographics — it does not apply a "Genova range framework" or compute aggregate scores
 
