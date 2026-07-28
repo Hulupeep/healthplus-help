@@ -33,7 +33,7 @@ Serum testing captures a snapshot of what is circulating at the moment of collec
 
 ### Thyroid Panel
 
-The platform includes comprehensive ZRT thyroid ranges:
+ZRT's serum thyroid panel measures:
 
 | Analyte | Unit | Clinical Use |
 |:--------|:-----|:-------------|
@@ -109,28 +109,35 @@ When ZRT serum results enter the platform:
 
 ```mermaid
 flowchart TD
-    A[ZRT Results Received] --> B[Identify Specimen Type: Serum]
-    B --> C[Identify Range Framework: ZRT]
-    C --> D[Match Patient Context]
-    D --> E[Apply Demographics]
-    E --> F{Context Factors}
-    F --> G[Age Band]
-    F --> H[Sex]
-    F --> I[Fasting State]
-    G --> J[Select Specific Range]
-    H --> J
-    I --> J
-    J --> K[Generate Classification]
+    A[ZRT Results Uploaded] --> B[Align each row to a canonical analyte]
+    B --> C[Match against ranges in the active Named Range Set]
+    C --> D[Pick the most specific range for the patient's demographics]
+    D --> E[Classify each value vs the applied range]
+    E --> F[Generate the interpretation summary]
 ```
+
+> **How ranges are actually chosen.** HealthPlus does not have a "ZRT range
+> framework" that routes results to vendor-specific ranges. Ranges are matched by
+> patient **demographics** (sex, age, and — where such ranges are authored —
+> pregnancy and menstrual phase) against the clinic's active Named Range Set. Named
+> Range Sets express a clinical philosophy, not a lab or methodology: the app
+> deliberately rejects naming a set `ZRT`, `DUTCH`, `NutrEval`, or `Genova` ("ZRT is
+> a laboratory, not a clinical philosophy") and even rejects specimen words like
+> `serum`. Individual range definitions instead carry a stored `specimen_type` and an
+> optional `range_framework` tag — descriptive fields, not a matching key.
 
 ### Context Factors for ZRT
 
-The platform considers:
+The platform matches ranges on patient **demographics**:
 
 - **Biological sex** — Male vs female ranges
-- **Age band** — Ranges vary by age group
-- **Fasting state** — Glucose, insulin, lipids require fasting
-- **Time of collection** — Morning cortisol vs afternoon
+- **Age** — The most specific applicable age range wins
+- **Pregnancy / menstrual phase** — Where such ranges have been authored
+
+Fasting state and time of collection are clinically important for interpreting a
+serum result (e.g. glucose/insulin/lipids assume fasting; cortisol assumes a morning
+draw), but they are **not** range-matching dimensions in the platform — they are not
+used to select which range applies.
 
 ---
 
@@ -140,12 +147,17 @@ ZRT provides conventional laboratory reference intervals. The platform also offe
 
 **Example: TSH**
 
+> **Illustrative only — not seeded reference values.** The numbers below show the
+> *shape* of a conventional-vs-functional comparison; they are not the ranges
+> HealthPlus applies. HealthPlus classifies each value against the configured, sourced
+> range in your clinic's active Named Range Set — it never invents range boundaries.
+
 | Framework | Low | Optimal | High |
 |:----------|:----|:--------|:-----|
 | Conventional | < 0.4 | 0.4 - 4.5 | > 4.5 |
 | Functional | < 1.0 | 1.0 - 2.5 | > 2.5 |
 
-When your clinic selects a Named Range Set, it determines which framework applies. The platform always preserves both classifications for reference.
+When your clinic selects a Named Range Set, it determines which functional ranges apply. The platform preserves both the conventional and functional classifications for reference.
 
 ---
 
@@ -153,9 +165,9 @@ When your clinic selects a Named Range Set, it determines which framework applie
 
 ZRT serum results integrate with the Named Range Set system:
 
-1. **Results arrive with ZRT range framework tag**
-2. **Named Range Set provides interpretive context**
-3. **Functional ranges overlay ZRT reference intervals**
+1. **Each uploaded row is aligned to a canonical analyte** — matching is by analyte code, not display name
+2. **The active Named Range Set provides interpretive context** — the clinic's chosen clinical philosophy
+3. **Ranges are matched by demographics** — the most specific applicable range for the patient's sex/age (and any authored pregnancy/menstrual ranges) wins; there is no "ZRT framework" keying
 4. **Both conventional and functional classifications are shown**
 
 This dual-view ensures you always know:
@@ -168,7 +180,7 @@ This dual-view ensures you always know:
 
 - ZRT serum panels measure circulating levels at time of collection
 - Comprehensive coverage of thyroid, metabolic, lipid, and hormone markers
-- Results are tagged with ZRT range framework for appropriate reference ranges
-- Functional ranges from Named Range Sets overlay conventional ZRT ranges
+- Uploaded values are matched to ranges by patient demographics against the active Named Range Set — not routed by a vendor "framework"
+- Functional interpretation from the active Named Range Set is layered on top of the conventional classification
 - The platform shows both conventional and functional classifications
 
