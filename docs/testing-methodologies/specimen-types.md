@@ -51,9 +51,8 @@ The platform supports all major clinical specimen types:
 - Vitamin and mineral levels
 
 **Platform handling:**
-- Most analytes default to serum when blood is the specimen
-- ZRT serum panels use this specimen type
-- Ranges are specific to serum concentrations
+- Serum is recorded as the `specimen_type` on a result and can be stored on range and analyte definitions as descriptive metadata
+- `specimen_type` is a stored descriptive field — it is **not** a range-selection key (see [How Specimen Type Is Used](#how-specimen-type-is-used) below)
 
 ### Plasma
 
@@ -106,7 +105,7 @@ DUTCH uses dried urine on filter paper collected at specific times:
 | 4 | Bedtime | Evening cortisol |
 | 5 | Optional overnight | Total hormone production |
 
-The platform tracks collection timepoints and validates that timing requirements were met.
+*The collection schedule above is defined by the DUTCH test itself, not by HealthPlus.* The data model includes `collection_timepoints`/`analyte_timepoints` tables to record which timepoint a sample belongs to, but the platform does **not** independently validate that a specimen's timing requirements were met.
 
 ---
 
@@ -147,48 +146,51 @@ The platform tracks collection timepoints and validates that timing requirements
 
 ---
 
-## How Specimen Type Affects Range Selection
+## How Specimen Type Is Used
 
-The platform uses specimen type as a key criterion for range selection:
+**Range selection is driven by patient demographics, not by specimen type.** When the platform matches a result to a reference range, `RangeMatchingService` sorts candidate ranges purely by demographic specificity — menstrual phase, pregnancy, age, and sex. Specimen type is **not** one of the matching dimensions.
 
 ```mermaid
 flowchart TD
     A[Lab Result] --> B[Identify Analyte]
-    B --> C[Identify Specimen Type]
-    C --> D{Specimen-Specific Range Exists?}
-    D -->|Yes| E[Apply Specimen-Specific Range]
-    D -->|No| F[Flag for Review]
+    B --> C[Gather candidate ranges from active Named Range Set]
+    C --> D[Sort by demographic specificity:<br/>menstrual phase → pregnancy → age → sex]
+    D --> E[Apply most specific matching range]
     E --> G[Continue with Classification]
 ```
 
-### Example: Testosterone
+`specimen_type` and `range_framework` (which can hold values like `ZRT`, `DUTCH`, or `Genova`) are **descriptive stored fields** on range/analyte definitions. They record what a value represents; they do **not** route which range is selected. Named Range Sets even forbid vendor/specimen names (`DUTCH`, `ZRT`, `Genova`, `serum`, `plasma`, `urine`) as set names — the guidance is to use the `specimen_type` field for that metadata instead.
 
-| Specimen | Unit | Range Framework | Male Reference |
-|:---------|:-----|:----------------|:---------------|
-| Serum | ng/dL | ZRT | 400-1000 |
-| Urine | ng/mg | DUTCH | 40-100 |
-| Saliva | pg/mL | ZRT | 50-200 |
+### Example: Testosterone (illustrative)
 
-The same hormone has different units and ranges depending on specimen type. The platform ensures the correct range is applied.
+The same hormone is reported in different units and against different reference values depending on how it was measured:
+
+| Specimen | Unit | Male Reference *(illustrative)* |
+|:---------|:-----|:--------------------------------|
+| Serum | ng/dL | 400–1000 |
+| Urine | ng/mg | 40–100 |
+| Saliva | pg/mL | 50–200 |
+
+*The values above are illustrative only, not reference ranges the platform ships.* HealthPlus applies only the configured, sourced ranges in the active Named Range Set, matched to the patient's demographics.
 
 ---
 
 ## Specimen-Analyte Binding
 
-Each analyte in the platform declares which specimen types it supports:
+An analyte definition can declare which specimen types it supports via the stored `specimen_required` field (an array of specimen types):
 
 ```
 Analyte: Estradiol (E2)
-Supported specimens: [serum, urine, saliva]
+specimen_required: [serum, urine, saliva]
 
 Analyte: D-Arabinitol
-Supported specimens: [urine]
+specimen_required: [urine]
 
 Analyte: Hemoglobin
-Supported specimens: [whole_blood]
+specimen_required: [whole_blood]
 ```
 
-When results are ingested, the platform verifies that the specimen type matches a supported type for that analyte.
+This is authoring metadata that describes the expected specimens for an analyte. It is stored on the analyte definition; it is not, on its own, an ingest-time gate.
 
 ---
 
@@ -220,15 +222,15 @@ Some tests require specific collection timing:
 | CAR | Waking + 30 min | Awakening response |
 | OGTT | 0, 30, 60, 120 min | Glucose tolerance |
 
-The platform tracks collection timing and flags results where timing requirements were not documented.
+*The timing guidance above is clinical best practice for these tests, not automated platform behavior.* HealthPlus can store the timepoint a sample is associated with, but it does not automatically flag results for undocumented or out-of-window collection timing.
 
 ---
 
 ## Key Takeaways
 
-- The platform supports all major clinical specimen types
-- Specimen type determines which reference ranges apply
-- The same analyte may have different ranges for different specimens
-- Collection timing is tracked for time-sensitive tests
-- Analytes declare which specimen types they support
+- The platform records all major clinical specimen types via the `specimen_type` field
+- Reference-range selection is driven by patient **demographics** (menstrual phase, pregnancy, age, sex), **not** by specimen type — `specimen_type` and `range_framework` are descriptive stored fields, not routing keys
+- The same analyte may be reported in different units/values depending on how it was measured
+- Collection timing is clinical best practice; the platform stores timepoints but does not auto-flag timing compliance
+- Analyte definitions can declare supported specimen types via the stored `specimen_required` field
 
