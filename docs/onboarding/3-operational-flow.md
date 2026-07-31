@@ -50,17 +50,18 @@ This step establishes the worldview for all subsequent processing.
 
 Within the selected Named Range Set, the platform finds the most appropriate range definition for this specific patient.
 
-The system considers:
+The system matches on patient demographics:
 
 - Biological sex
 - Age at time of collection
-- Pregnancy status and trimester (if applicable)
+- Pregnancy status (yes/no)
 - Menstrual cycle phase (if recorded and relevant)
-- Specimen type
 
-The platform searches for the most specific match. If a range definition exists for "female, age 30-39, pregnant, trimester 2," that definition is used. If no exact match exists, the system falls back to progressively broader definitions until a match is found.
+The platform searches for the most specific match, ranking candidate ranges by specificity: a range that requires a menstrual phase is preferred over one that requires pregnancy, then over one with a specific age range, then over a sex-specific range, and finally a general range. If a range definition exists for "female, age 30-39, pregnant," that definition is used. If no exact match exists, the system falls back to progressively broader definitions until a match is found.
 
-This ensures that patients receive contextually appropriate ranges, not generic population averages.
+Specimen type is recorded with each result, but it is a descriptive field — it is not one of the demographic dimensions the platform matches ranges against.
+
+This ensures that patients receive contextually appropriate ranges, not generic population averages — to the extent that the active Named Range Set actually defines those demographic-specific rows. The ranges seeded today are general adult ranges (roughly age 18–100) and are not yet stratified by pregnancy or cycle phase (tracked in healthplus#38), so demographic-specific substitution is supported by the matching engine and takes effect wherever a range set authors those rows.
 
 ---
 
@@ -68,19 +69,17 @@ This ensures that patients receive contextually appropriate ranges, not generic 
 
 The patient's lab value is compared against the selected range boundaries.
 
-The platform classifies the result into bands:
+The platform classifies the result into one of five bands:
 
 | Band | Meaning |
 |:-----|:--------|
-| Critical Low | Significantly below the lower bound |
+| Critical Low | Far below the lower bound (more than 150% of the boundary value below it) |
 | Low | Below the lower bound |
-| Suboptimal Low | Within range but approaching the lower bound |
-| Optimal | Well within the reference range |
-| Suboptimal High | Within range but approaching the upper bound |
+| Normal | Within the reference range |
 | High | Above the upper bound |
-| Critical High | Significantly above the upper bound |
+| Critical High | Far above the upper bound (more than 150% of the boundary value above it) |
 
-This classification is objective. It is based solely on the numeric value and the selected range boundaries.
+This classification is objective. It is based solely on the numeric value and the selected range boundaries: a value within the bounds is `Normal`, values outside are flagged `Low` or `High`, and those escalate to `Critical Low` or `Critical High` when they fall well beyond the boundary.
 
 ---
 
@@ -140,7 +139,7 @@ flowchart TD
     subgraph Classification
         H{Compare Value to Boundaries}
         I[Low]
-        J[Optimal]
+        J[Normal]
         K[High]
     end
 
