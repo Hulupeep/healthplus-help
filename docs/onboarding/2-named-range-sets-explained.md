@@ -22,27 +22,34 @@ When your clinic selects a Named Range Set, you are choosing a worldview. You ar
 
 ---
 
-## Examples of Named Range Sets
+## What Ships Today
 
-Different clinical contexts call for different reference frameworks.
+HealthPlus seeds **one** functional Named Range Set out of the box:
 
-**HealthPlus Functional (Default)**
+**Optimal Wellness Functional (Default)**
 
-This is the standard functional medicine framework. It uses optimized ranges based on functional medicine literature. It is appropriate for general wellness practices focused on preventive health.
+This is the standard functional framework — optimized ranges intended for general wellness practices focused on preventive health. It sits alongside the conventional reference catalog ("Standard Reference Ranges"), which carries traditional laboratory intervals.
 
-**Athletic Performance**
+That is the extent of what is pre-installed. A Named Range Set is *named after a clinical philosophy*, and the platform lets a clinic author or request additional sets under any philosophy label — it only forbids naming a set after a laboratory, methodology, or specimen type (e.g. DUTCH, ZRT, "serum"), because those describe *how* a sample was measured, not *what* optimal means.
 
-This framework uses ranges calibrated for trained athletes. An athlete's "normal" hemoglobin, testosterone, or ferritin may differ significantly from the general population. This Named Range Set reflects those differences.
+## Illustrative Worldviews (not shipped presets)
+{: .no_toc }
 
-**Conservative Reference**
+The examples below illustrate the *kinds* of worldview a clinic could author or request. They are not a menu you select from today — only "Optimal Wellness Functional" is seeded.
 
-This framework aligns closely with conventional laboratory reference intervals. It is appropriate for practices that want functional interpretation layered on top of traditional ranges, without significant threshold changes.
+**Athletic Performance** *(illustrative)*
 
-**Reproductive Health**
+A framework could calibrate ranges for trained athletes, whose "normal" hemoglobin, testosterone, or ferritin may differ from the general population.
 
-This framework includes detailed cycle-phase-specific ranges for hormones like progesterone and estradiol. It is designed for fertility clinics where menstrual cycle timing matters.
+**Conservative Reference** *(illustrative)*
 
-Your clinic may have access to additional Named Range Sets, or may request custom sets for specialized patient populations.
+A framework could align closely with conventional laboratory reference intervals, layering functional interpretation on top without significant threshold changes.
+
+**Reproductive Health** *(illustrative)*
+
+A framework could carry cycle-phase-specific ranges for hormones like progesterone and estradiol. The platform *does* support matching by menstrual phase (see Layer 2), but the seeded ranges do not yet populate cycle-phase or pregnancy variants, so this remains an authoring capability rather than shipped content.
+
+Custom sets go through a review and publication process before becoming available; the platform does not invent range values on your behalf — only configured, sourced ranges are ever applied.
 
 ---
 
@@ -58,13 +65,16 @@ Changing your Named Range Set changes everything downstream. A hemoglobin of 17.
 
 **Layer 2: Context Resolution Within the Set**
 
-Once the Named Range Set is selected, the platform finds the most appropriate range definition within that set for each patient.
+Once the Named Range Set is selected, the platform finds the most specific range definition within that set for each patient.
 
-If a patient is a 35-year-old pregnant woman in her second trimester, the system looks for a range definition matching "female, pregnant, trimester 2" within the selected Named Range Set.
+Matching is done on four demographic dimensions: **sex, age, pregnancy (yes/no), and menstrual phase.** A more specific definition (one that requires a menstrual phase, or pregnancy, or a narrow age band) is preferred over a general one. So for a 35-year-old menstruating woman, a range that specifies her menstrual phase wins over a general adult-female range for that analyte.
 
-If no exact match exists, it falls back to the next most specific definition available.
+A few clarifications on what this layer does *not* do:
 
-This layer is automatic. The system handles it based on the patient's recorded demographics.
+- **Pregnancy is matched as a yes/no flag, not by trimester.** The patient's pregnancy *stage* (e.g. "second trimester") is recorded on their profile, but it is not itself a range-selection key — the matcher only asks "pregnant or not."
+- **Stratified content must exist to be matched.** The seeded functional ranges are currently unspecified adult ranges (roughly age 18–100, no pregnancy or menstrual variants populated — see healthplus#38), so in practice there is usually nothing more specific to fall back *to* yet. Cycle-phase and pregnancy stratification are supported by the matcher but not yet seeded.
+
+If no more specific match exists, it uses the next most general definition available. This layer is automatic, driven by the patient's recorded demographics.
 
 **Layer 3: Interpretation Overlays**
 
@@ -94,9 +104,9 @@ Interpretation is writing the report card.
 
 When your clinic switches to a different Named Range Set, the entire reference framework changes.
 
-All numeric boundaries change. Classification thresholds change. What was "optimal" might become "suboptimal" or vice versa.
+All numeric boundaries change. Classification thresholds change. A value that classifies as **Normal** under one set may classify as **Low** or **High** under another, because the boundaries defining those bands moved. (The status a result can carry is Normal, Low, High, or Critical Low / Critical High — "optimal" is the *philosophy* a set encodes, not a separate classification band.)
 
-This is intentional. Different clinical philosophies define optimal differently.
+This is intentional. Different clinical philosophies define their boundaries differently.
 
 Historical results are not retroactively reclassified. They remain tied to the Named Range Set that was active when they were processed. This preserves auditability.
 
