@@ -46,23 +46,23 @@ Within a Named Range Set, the platform selects range definitions deterministical
 
 **Selection Criteria (in order of specificity):**
 
-1. Menstrual cycle phase (if recorded and relevant)
-2. Pregnancy status and trimester
-3. Age band
+1. Menstrual cycle phase (if recorded)
+2. Pregnancy status (recorded as a yes/no requirement on the range definition)
+3. Age band (age minimum and maximum)
 4. Biological sex
-5. Specimen type
 
 The system searches for the most specific match first. If no exact match exists, it falls back to progressively broader definitions.
 
+> **What the matcher does — and does not — key on.** Range selection is driven by these four demographic dimensions only. A patient's **pregnancy trimester/stage** and the **specimen type** of a test are recorded on the profile and the test definition respectively, but they are **not** selection keys — the matcher does not use them to choose a range. (Pregnancy is matched as a boolean; trimester is descriptive context.)
+
 **Example:**
 
-For a 32-year-old pregnant female in her second trimester:
+For a 32-year-old pregnant female:
 
-1. Look for: female, pregnant, trimester 2, age 30-35
-2. If not found: female, pregnant, trimester 2
-3. If not found: female, pregnant
-4. If not found: female, age 30-35
-5. If not found: female (general adult)
+1. Look for: female, pregnant, age 30-35
+2. If not found: female, pregnant
+3. If not found: female, age 30-35
+4. If not found: female (general adult)
 
 This hierarchy is fixed. It does not vary based on the analyte or clinical context. The same patient context always produces the same selection path.
 
@@ -76,7 +76,7 @@ The platform does not average ranges, blend boundaries, or apply heuristics. It 
 
 **What "Most Specific" Means:**
 
-A range definition for "female, pregnant, trimester 2" is more specific than one for "female, pregnant," which is more specific than one for "female."
+A range definition for "female, pregnant, age 30-35" is more specific than one for "female, pregnant," which is more specific than one for "female."
 
 Specificity is determined by how many context criteria the definition includes, not by which criteria they are.
 
@@ -109,7 +109,7 @@ Every result classification generates an audit record containing:
 | **Selection Rationale** | Why this definition was chosen |
 | **Alternatives Considered** | Other definitions that were evaluated |
 | **Numeric Boundaries** | The actual low/high thresholds used |
-| **Classification** | The resulting band (low, optimal, high, etc.) |
+| **Classification** | The resulting band (normal, low, high, critical low, or critical high) |
 | **Timestamp** | When the classification was performed |
 | **Interpretation ID** | Link to any AI interpretation generated |
 
@@ -119,13 +119,15 @@ This audit record is immutable. It cannot be altered after creation.
 
 ## Clinic-Specific Overrides
 
-Clinics may create overrides that take precedence over the Named Range Set.
+When an override exists, it takes precedence over the Named Range Set.
 
 **Override Hierarchy (highest to lowest priority):**
 
-1. **Patient-Specific Override** — A range set by a clinician for one specific patient
-2. **Persona Override** — A range defined for a patient cohort (e.g., "Hashimoto's patients")
+1. **Patient-Specific Override** — A range that applies to one specific patient
+2. **Persona Override** — A range defined for a patient cohort (e.g., a "Hashimoto's patients" persona)
 3. **Named Range Set** — The clinic's selected default framework
+
+> **How overrides come to exist.** The application does **not** offer a "create patient override" screen. Overrides are introduced through the **Promote Range Override** flow (the Pending Promotions card, which promotes a patient-level override to a persona or the active range set), and in test/seed environments through seed data. The Explain dialog's only patient-level authoring action is **Add clinician note** — a commentary, not a range override. The precedence and audit behavior below applies however the override was introduced. Cohort/persona names such as "Hashimoto's patients" are illustrative.
 
 When an override exists, it is applied instead of the Named Range Set definition. The audit trail records:
 
