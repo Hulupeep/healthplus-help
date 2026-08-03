@@ -52,6 +52,8 @@ A Named Range Set represents your clinic's interpretive framework — how you de
 
 ### Valid Named Range Set Names
 
+These are examples of names that correctly express a *philosophy* rather than a methodology. They illustrate valid naming — they are **not** a menu of installable range sets.
+
 | Name | Philosophy |
 |:-----|:-----------|
 | **Optimal Wellness Functional** | Optimized ranges for general wellness |
@@ -59,6 +61,9 @@ A Named Range Set represents your clinic's interpretive framework — how you de
 | **Standard Reference Ranges** | Traditional laboratory intervals |
 | **Reproductive Health** | Focused on fertility and cycle-specific ranges |
 | **Conservative Clinical** | Conventional-aligned functional approach |
+
+{: .note }
+> **What actually ships today:** one seeded functional set — **"Optimal Wellness Functional"** — alongside the conventional reference catalog. The other names above are *illustrative philosophy names* (the app cites "Athletic Performance" only as an example in its name-validation copy), not additional sets you can select. Creating them is an authoring task, not a built-in option.
 
 ### Invalid Named Range Set Names
 
@@ -79,27 +84,30 @@ Testing methodologies describe HOW a test was performed, not WHAT optimal means.
 
 ### How Methodologies Are Represented
 
-Each range definition within a Named Range Set has two key properties:
+Each range definition within a Named Range Set carries descriptive properties. `specimen_type` and `range_framework` are **stored, descriptive** fields — they record how the test was performed and where the range came from. They are *not* keys the platform uses to select which range to apply (selection is by demographics — see below).
 
 ```
 ┌────────────────────────────────────────────────────────────────┐
 │ Range Definition (within "Optimal Wellness Functional")        │
 ├────────────────────────────────────────────────────────────────┤
 │ Analyte:        Estradiol (E2)                                 │
-│ specimen_type:  urine          ← Methodology property          │
-│ range_framework: DUTCH          ← Source/provenance property   │
-│ Lower Bound:    0.5 ng/mg                                      │
-│ Upper Bound:    2.5 ng/mg                                      │
-│ Sex:            Female                                         │
-│ Cycle Phase:    Luteal                                         │
+│ specimen_type:  urine          ← descriptive (how tested)      │
+│ range_framework: DUTCH          ← descriptive (source/origin)  │
+│ Lower Bound:    0.5 ng/mg      ← illustrative values only      │
+│ Upper Bound:    2.5 ng/mg      ← illustrative values only      │
+│ Sex:            Female         ← matching dimension            │
+│ Cycle Phase:    Luteal         ← matching dimension            │
 └────────────────────────────────────────────────────────────────┘
 ```
 
+{: .note }
+> Numeric bounds shown here and below are **illustrative placeholders**, not authoritative reference values. HealthPlus only applies the configured, sourced ranges present in your active range set.
+
 ### What This Enables
 
-**One Named Range Set serves all methodologies:**
+**One Named Range Set can hold ranges for any methodology:**
 
-When your clinic selects "Optimal Wellness Functional", you automatically get:
+The data model lets a single Named Range Set contain range definitions spanning every specimen type and framework — so a clinic makes ONE philosophy choice rather than juggling a separate set per methodology:
 
 | Methodology | Specimen Type | Example Analytes |
 |:------------|:--------------|:-----------------|
@@ -108,7 +116,10 @@ When your clinic selects "Optimal Wellness Functional", you automatically get:
 | **NutrEval nutritional** | Urine + blood | Organic acids, toxic elements |
 | **Saliva panels** | Saliva | Cortisol awakening response |
 
-You do NOT need to "also activate DUTCH" or "add NutrEval ranges" — they're already included.
+You never "also activate DUTCH" as a separate set — any DUTCH-sourced ranges live inside your chosen set.
+
+{: .note }
+> **What ships vs. what the model supports.** The multi-methodology coverage above describes what a fully authored set *can* contain. The seeded "Optimal Wellness Functional" set ships general adult functional ranges (unstratified, adult 18–100 — see healthplus#38); comprehensive DUTCH / NutrEval / saliva coverage is an authoring task, not pre-populated content. Don't assume every methodology already has ranges present just because the set can hold them.
 
 ---
 
@@ -116,27 +127,27 @@ You do NOT need to "also activate DUTCH" or "add NutrEval ranges" — they're al
 
 When a lab result is processed:
 
-### Step 1: Identify the Clinic's Named Range Set (Philosophy)
+### Step 1: Identify the Clinic's Active Named Range Set (Philosophy)
 
-The system checks which Named Range Set your clinic has activated. This is your "worldview."
+The system checks which Named Range Set your clinic has activated. This is your "worldview," and it scopes which range definitions are candidates.
 
-### Step 2: Filter by Specimen Type and Methodology
+### Step 2: Match Patient Demographics
 
-Within that Named Range Set, the system filters to ranges matching:
-- The specimen type of the result (serum, urine, saliva, etc.)
-- The laboratory/framework source if specified
+Among the candidate ranges for the analyte, the platform selects the best match on **demographics only**, in this specificity order (`RangeMatchingService.sortBySpecificity`):
 
-### Step 3: Match Patient Demographics
+1. Menstrual cycle phase
+2. Pregnancy status (a boolean requirement)
+3. Age (min / max bounds)
+4. Sex
 
-Among the filtered ranges, the system selects the best match for:
-- Sex
-- Age
-- Pregnancy status
-- Menstrual cycle phase
+The most specific range whose demographic requirements the patient satisfies wins.
 
-### Step 4: Apply the Range
+### Step 3: Apply the Range
 
-The most specific matching range definition is applied to classify the result.
+The winning range definition is applied to classify the result.
+
+{: .important }
+> **Specimen type and range framework do NOT route selection.** They are stored, descriptive properties (recording how a test was performed and where its range originated) — not matching keys. The matcher never branches on `specimen_type` or `range_framework`; it ranks candidates purely by the demographic dimensions above. (Those fields *do* power display filters in the admin UI — see the next section — which is a viewing convenience, not the selection mechanism.)
 
 ---
 
@@ -171,7 +182,7 @@ The most specific matching range definition is applied to classify the result.
 └─────────────────────────────────────────────────────────────────────────┘
 ```
 
-**Key Point**: All these ranges live INSIDE the same Named Range Set. The clinic made ONE choice (philosophy), and all methodologies are included.
+**Key Point**: When ranges for these methodologies exist, they live INSIDE the same Named Range Set — the clinic made ONE philosophy choice rather than one per methodology. (The numeric bounds above are illustrative placeholders, and which methodologies are actually populated depends on how the set was authored — the seeded set is not comprehensive across all specimen types.)
 
 ---
 
@@ -222,7 +233,7 @@ These are different questions with different answers.
 
 ### "We need to activate DUTCH separately"
 
-**Wrong.** If your clinic uses "Optimal Wellness Functional", you already have DUTCH ranges included. The system automatically applies them when it sees urine specimens with DUTCH framework markers.
+**Wrong.** DUTCH is not a separate set to activate — any DUTCH-sourced ranges are just definitions inside your chosen set (assuming they've been authored into it). When a result is processed, the platform picks the matching range for that analyte by patient demographics; it does not route on the DUTCH framework tag or the specimen type.
 
 ### "DUTCH Functional Ranges is a Named Range Set"
 
@@ -246,13 +257,13 @@ These are different questions with different answers.
 
 {: .highlight }
 > **Testing Methodology** = Specimen type + laboratory procedure
-> - Properties of individual range definitions
-> - Automatically filtered when results are processed
+> - Stored, descriptive properties of individual range definitions
+> - Do **not** route range selection (demographics do); they power admin display filters
 > - Examples: DUTCH (urine), ZRT (serum), NutrEval (multi-specimen)
 
 {: .highlight }
-> **One selection gives you everything.**
-> When you select a Named Range Set, you get ranges for all the testing methodologies your clinic uses — serum, urine, saliva, and more.
+> **One selection sets your philosophy.**
+> Selecting a Named Range Set fixes the interpretive framework for every result. Its ranges span whatever specimen types and methodologies have been authored into it — the seeded set ships general adult functional ranges, and broader per-methodology coverage is added by authoring, not automatically populated.
 
 ---
 
