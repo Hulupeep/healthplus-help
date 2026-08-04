@@ -125,25 +125,27 @@ The interpretation does not come from nowhere. It is traceable to these inputs.
 
 ## An Example
 
+*The values below are illustrative only. HealthPlus applies only configured, sourced ranges — it does not ship the specific numbers shown here.*
+
 **Patient Context:**
 
 - 45-year-old female
-- Named Range Set: HealthPlus Functional
+- Named Range Set: Optimal Wellness Functional
 - Reported symptoms: fatigue, brain fog, weight gain
 
-**Lab Results:**
+**Lab Results (illustrative):**
 
-- TSH: 3.2 mIU/L — classified as "Suboptimal High"
-- Free T4: 0.9 ng/dL — classified as "Low Normal"
-- Free T3: 2.1 pg/mL — classified as "Suboptimal Low"
+- TSH: 3.2 mIU/L — Status: **High**
+- Free T4: 0.9 ng/dL — Status: **Normal**
+- Free T3: 2.1 pg/mL — Status: **Low**
 
 **Numeric Classification (Layer 2):**
 
-These classifications are determined by the Named Range Set and patient demographics. They do not change based on symptoms.
+These classifications are determined by the Named Range Set and patient demographics. They do not change based on symptoms. The Status column reports only **Normal, Low, High, Critical Low, or Critical High** — there is no "Suboptimal" band. Whether a result was classified against a functional or a conventional range is carried by the `Applied` / `Available` badge, not by the Status word, and any "upper end / lower end of range" nuance comes from the interpretation layer below, not the numeric classification.
 
 **AI Interpretation (Layer 3):**
 
-> The thyroid panel shows a pattern consistent with suboptimal thyroid function. TSH is at the upper end of the functional range while Free T3 is at the lower end, suggesting possible conversion inefficiency.
+> The thyroid panel shows a pattern consistent with suboptimal thyroid function. TSH sits above the functional upper bound while Free T3 falls below the functional lower bound, suggesting possible conversion inefficiency.
 >
 > The reported symptoms (fatigue, brain fog, weight gain) are consistent with this pattern, though they are nonspecific and may have other causes.
 >
