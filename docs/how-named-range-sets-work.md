@@ -41,18 +41,26 @@ The Functional Range Sets catalog controls the second workflow only: functional 
 
 ## What Determines Which Functional Range Is Used
 
-Functional range selection is based on objective patient and specimen context.
+Functional range selection is based on objective patient demographics. HealthPlus chooses which functional range applies by comparing the patient's demographic context against each candidate range definition. It does **not** route selection by specimen type or laboratory methodology.
 
-### Factors That Can Affect the Functional Range
+### Demographic Factors That Select the Functional Range
 
-- Specimen type
-- Unit
+These are the only patient attributes the range matcher uses to decide which functional range applies:
+
 - Biological sex
 - Age
-- Pregnancy status and trimester
-- Menstrual cycle phase for cycle-dependent hormones
-- Patient-specific override
-- Persona or cohort assignment
+- Pregnancy status (recorded as yes / no)
+- Menstrual cycle phase, for ranges that are defined per phase
+
+The most specific matching range wins (see Step 4 below), and a patient-specific or persona override can supersede the active set's global range.
+
+### Recorded But Not Used to Select the Range
+
+These are stored with the result or the range definition and can matter for display or comparison, but they do **not** pick a different functional range:
+
+- **Specimen type** — stored on the result and on range definitions as a descriptive property; it is not a selection key.
+- **Unit** — used to normalize and compare the value. A unit that cannot be reconciled with the range blocks that comparison (shown as a unit-mismatch warning); it does not select an alternative range.
+- **Pregnancy stage / trimester** — recorded in the patient's reproductive context, but only the yes / no pregnancy flag participates in matching. Today's seeded functional ranges are adult (roughly 18–100) and are not stratified by trimester, so no trimester-specific range is substituted automatically.
 
 ### Factors That Do Not Change Numeric Range Boundaries
 
