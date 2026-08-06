@@ -36,86 +36,88 @@ Range Set Management controls functional ranges. Conventional lab/provider refer
 ## Accessing Range Set Administration
 
 1. Navigate to **Admin** in the main menu
-2. Click **Functional Range Sets**
+2. Open **Functional Range Sets**
 3. You'll see the Functional Range Sets catalog
+
+The catalog header carries three actions: **History** (selection history), **Import**, and **Create Custom**. A **Source** filter lets you narrow the grid to Built-in, Vendor, Custom, or Imported sets.
 
 ---
 
 ## The Range Sets Catalog
 
-The catalog displays all available range sets with key information. It is read
-live from the range-set catalog, so the names and versions shown match the
-current active data. The built-in functional set is **Optimal Wellness
-Functional**; clinic-created sets appear alongside it as additional cards.
+The catalog displays all available range sets as cards. It is read live from the
+range-set catalog, so the names and versions shown match the current active
+data. The built-in functional set is **Optimal Wellness Functional**;
+clinic-created sets appear alongside it as additional cards. (Conventional
+reference-range catalogs are filtered out here and managed separately.)
 
 {: .note }
 Names and versions below reflect the current catalog. Range counts are
-illustrative — the real count is shown per set in the app.
+illustrative — the real count is shown per card in the app.
 
 ```
 ┌─────────────────────────────────────────────────────────────────┐
-│ FUNCTIONAL RANGE SETS                                            │
-│ Choose the functional range set used for interpretation           │
+│ FUNCTIONAL RANGE SETS                     [History][Import][Create Custom]
+│ Choose the functional range set used for functional interpretation
 ├─────────────────────────────────────────────────────────────────┤
 │                                                                  │
 │ ┌──────────────────────────────────────────────────────────────┐│
-│ │ Optimal Wellness Functional                  [PUBLISHED]     ││
+│ │ Optimal Wellness Functional                     [✓ Active]   ││
 │ │ Optimized functional ranges for general wellness assessment  ││
+│ │ 1.0.1   Built-in   (n) ranges   (n) refs   published         ││
 │ │                                                              ││
-│ │ Source: system    Ranges: (shown in app)    Version: 1.0.1   ││
-│ │                                                              ││
-│ │ [View Ranges] [Preview] [Activate]                          ││
+│ │ [View Ranges] [Preview] [Export] [Create Editable Version]  ││
 │ └──────────────────────────────────────────────────────────────┘│
 │                                                                  │
 │ ┌──────────────────────────────────────────────────────────────┐│
-│ │ Clinic Custom Ranges (example)               [DRAFT]        ││
+│ │ Clinic Custom Ranges (example)                               ││
 │ │ Example clinic-created draft set                             ││
+│ │ 0.1     Custom     (n) ranges   (n) refs   draft             ││
 │ │                                                              ││
-│ │ Source: clinic    Ranges: (shown in app)    Version: 0.1     ││
-│ │                                                              ││
-│ │ [View Ranges] [Preview] [Publish]                           ││
+│ │ [View Ranges] [Preview] [Export] [Edit Draft]               ││
 │ └──────────────────────────────────────────────────────────────┘│
 │                                                                  │
 └─────────────────────────────────────────────────────────────────┘
 ```
 
-### Catalog Information
+### Catalog Card Information
+
+Each card shows a set of badges plus action buttons:
 
 | Field | Description |
 |:------|:------------|
 | **Name** | The range set's display name |
-| **Status** | Draft, Published, or Deprecated |
-| **Source** | `system` (built-in) or `clinic` (custom) |
-| **Ranges** | Total number of ranges in the set |
-| **Version** | Current version number |
+| **Version** | Current version badge |
+| **Source** | One of **Built-in**, **Vendor**, **Custom**, **Imported**, or **Shared** |
+| **Ranges** | Number of ranges in the set (`N ranges` badge) |
+| **Refs** | Number of source references (`N refs` badge) |
+| **Status** | `draft`, `published`, or `deprecated` badge |
+| **Active** | A green **Active** badge marks the set currently used for interpretation |
+
+The card buttons depend on status:
+
+- **Published** set: **View Ranges**, **Preview**, **Export**, **Activate** (when not already active), and **Create Editable Version**.
+- **Draft** set: **View Ranges**, **Preview**, **Export**, and **Edit Draft**.
 
 Conventional reference range catalogs are managed separately and should not be activated as functional range sets.
 
 ---
 
-## Viewing Range Set Details
+## Viewing a Range Set
 
-Click **Details** on any range set to see:
+There is no separate "details" screen. From a card you have three ways to look
+into a set:
 
-### Summary Tab
-- Full description
-- Creation and modification dates
-- Version history
-- Checksum (for published sets)
+- **View Ranges** — opens the set's ranges page (the header shows the set name, version badge, status badge, range count, and — for drafts — a pending-changes count).
+- **Preview** — opens a modal with the set's member count, reference count, and a sample of ranges (Analyte / Range / Unit / Sex). The modal also offers **Activate This Set**.
+- **Export** — downloads the set (JSON).
 
-### Ranges Tab
-- Complete list of all ranges
-- Analyte code and name
-- Bounds (lower/upper)
-- Unit of measurement
-- Sex and age filters
-- Framework (optimal, suboptimal, etc.)
+For the clinic's activation record, use the catalog's top-level **History**
+button — see [Version History and Selection History](#version-history-and-selection-history).
 
-### History Tab
-- Complete audit trail
-- All modifications with timestamps
-- Who made each change
-- Rationale for changes
+{: .note }
+The bounds, units, and page counts in the illustrations below are examples for
+layout only — the real values are shown per set in the app.
 
 ---
 
@@ -124,43 +126,47 @@ Click **Details** on any range set to see:
 ### From the Catalog
 
 1. Click **View Ranges** on any range set
-2. Browse the searchable, paginated list
-3. Use filters:
-   - Search by analyte name or code
-   - Filter by sex applicability
-   - Filter by age range
+2. Browse the searchable, paginated list (search by analyte code or name)
 
 ### Range List View
 
 ```
 ┌─────────────────────────────────────────────────────────────────┐
-│ RANGES: Optimal Wellness Functional                              │
-│ [n] ranges total                          [Search: ________]     │
+│ ← Optimal Wellness Functional   1.0.1  published   [n] ranges    │
 ├─────────────────────────────────────────────────────────────────┤
-│ Code    │ Analyte              │ Lower │ Upper │ Unit  │ Sex    │
-├─────────┼──────────────────────┼───────┼───────┼───────┼────────┤
-│ TSH     │ Thyroid Stimulating  │ 0.5   │ 2.0   │ mIU/L │ All    │
-│ FT4     │ Free Thyroxine       │ 1.0   │ 1.5   │ ng/dL │ All    │
-│ FT3     │ Free Triiodothyronine│ 3.0   │ 4.0   │ pg/mL │ All    │
-│ FERR    │ Ferritin             │ 50    │ 150   │ ng/mL │ Female │
-│ FERR    │ Ferritin             │ 75    │ 150   │ ng/mL │ Male   │
-│ ...     │ ...                  │ ...   │ ...   │ ...   │ ...    │
+│ [Search by analyte code or name...]                              │
+├──────────────────────┬───────┬──────┬─────┬──────────────┬──────┤
+│ Analyte              │ Range │ Unit │ Sex │ Applicability │ Age  │
+├──────────────────────┼───────┼──────┼─────┼──────────────┼──────┤
+│ TSH  Thyroid Stim.   │0.5-2.0│mIU/L │ All │ All          │ All  │  [View]
+│ FT4  Free Thyroxine  │1.0-1.5│ng/dL │ All │ All          │ All  │  [View]
+│ FERR Ferritin        │50-150 │ng/mL │ Fem │ All          │ All  │  [View]
+│ ...                  │ ...   │ ...  │ ... │ ...          │ ...  │
 ├─────────────────────────────────────────────────────────────────┤
-│                         Page 1 of 16    [< Prev] [Next >]        │
+│         Showing 1 to 50 of [n]         [< Previous] [Next >]     │
 └─────────────────────────────────────────────────────────────────┘
 ```
 
+The **Applicability** column shows the reproductive context that applies to a
+row — a menstrual-phase badge, a **Context required** badge, or **All**. Each
+row's action is **View** (published) or **Edit** (draft).
+
 ### Individual Range Details
 
-Click any range to see complete details:
+Click a range's **View** / **Edit** action to open its detail page. The
+read-only **Analyte Information** card shows:
 
-- **Analyte Information**: Code, full name, description
-- **Range Bounds**: Lower and upper limits with unit
-- **Demographics**: Sex and age applicability
-- **Framework**: Range category (optimal, borderline, etc.)
-- **Evidence Level**: Supporting research quality
-- **Notes**: Clinical guidance and rationale
-- **Version Status**: Whether this range can be edited
+- **Analyte Code**, **Analyte ID**, and **Full Name**
+- **Framework** — the range's `range_framework` descriptor tag (for example, `functional`); this is a stored label, **not** an "optimal / suboptimal / borderline" classification (HealthPlus does not assign within-range "optimal/suboptimal" bands)
+- **Evidence Level** — the evidence-level tag on the range, when present
+- **Analyte Class** — when present
+- **Reproductive Context** — "Required for safe resolution" or "Not required"
+- **Notes** — clinical guidance and rationale, when present
+- **Version ID**, plus a link to the analyte's **Interpretation Guidance**
+
+The editable range values (bounds, unit, sex, age) sit in the left card and can
+only be changed on a **draft** version — see
+[Editing Functional Ranges]({% link docs/guides/admin/editing-functional-ranges.md %}).
 
 ---
 
@@ -172,13 +178,10 @@ Your clinic's active functional range set is shown with an **Active** badge.
 
 ### Changing the Active Set
 
-1. Find the desired range set in the catalog
-2. Click **Activate**
-3. Review the confirmation dialog:
-   - Current active set
-   - New active set
-   - Impact summary
-4. Click **Confirm Activation**
+1. Find the desired **published** range set in the catalog (only published sets show **Activate**)
+2. Click **Activate** (or **Activate This Set** from the Preview modal)
+3. A confirmation dialog names the set and version and notes it will become the default set for patient interpretations
+4. Click **Activate** to confirm
 
 {: .warning }
 > Changing your range set affects how future results are interpreted. Review the differences carefully before switching.
@@ -199,14 +202,22 @@ Your clinic's active functional range set is shown with an **Active** badge.
 {: .note }
 > Creating and editing draft range sets requires administrator permissions.
 
-### Creating a New Draft
+### Creating a New Custom Set
 
-1. Click **Create New Range Set**
-2. Enter:
-   - Name (required)
-   - Description
-   - Base (optional - copy from existing set)
-3. Click **Create Draft**
+1. Click **Create Custom** in the catalog header
+2. On the **Create Custom Range Set** page, fill in:
+   - **Name** (required)
+   - **Description**
+   - **Source Type** (Clinic Custom, Imported, or Shared)
+   - **Initial Version** (defaults to `1.0.0`)
+   - **Maintainer**
+3. Use the **Select Ranges** picker on the right to choose which ranges to include (search, then check rows; ranges without a valid source appear as non-selectable diagnostic rows)
+4. Click **Create Range Set**
+
+{: .note }
+To make an editable copy of an existing **published** set instead of building
+one from scratch, use **Create Editable Version** on that set's card — this
+creates (or resumes) a draft version you can edit.
 
 ### Adding Ranges to a Draft
 
@@ -264,24 +275,21 @@ When editing ranges:
 
 ## Publishing a Draft
 
-When a draft is ready for clinical use:
+Publishing and activating are a single step in the app. On the draft's **View
+Ranges** page:
 
-1. Open the draft range set
-2. Click **Publish**
-3. Review:
-   - All ranges included
-   - Validation summary
-   - Required approvals
-4. Enter publication notes
-5. Click **Confirm Publish**
+1. Fill in the **Publish Reference** panel — a set-level source or review note for this draft version, required before it can go live. Provide at least a **Title** or a **Provenance note** (the panel also takes a Reference type, Identifier, and URL).
+2. Click **Publish and Activate**
+
+This publishes the draft version and immediately makes it the active set for the
+clinic. (The set-level Publish Reference is separate from individual range
+citations, which are checked per member — see Source Requirements below.)
 
 ### What Happens on Publish
 
-- Version number increments
-- Checksum is calculated
-- All ranges become immutable
-- Set becomes available for clinic selection
-- Audit trail records the publication event
+- The version becomes **published** and locked (a banner marks it locked for auditability)
+- All range members in the version become immutable — further changes require a new editable draft
+- The published version is activated for the clinic in the same action
 
 ### Source Requirements on Publish
 
@@ -299,48 +307,49 @@ For details, see [Functional Range Source Requirements]({% link docs/guides/admi
 
 ---
 
-## Deprecating a Published Set
+## Range Set Lifecycle and Deprecation
 
-When a range set should no longer be used:
+A range set version moves through **draft → published → deprecated** as its
+lifecycle status. Draft and published are exposed by the actions above.
 
-1. Open the published range set
-2. Click **Deprecate**
-3. Enter:
-   - Deprecation reason
-   - Recommended replacement (if applicable)
-4. Click **Confirm Deprecation**
+{: .note }
+There is no in-app "Deprecate" button today. `deprecated` is a lifecycle status
+the platform records; the API prevents editing or deleting ranges in a
+published or deprecated version. In practice you retire a set by publishing and
+activating a replacement — the previously active set stays in the catalog and
+in the selection history but is no longer the active set.
 
-### Deprecated Set Behavior
-
-- No longer appears in selection dropdown
-- Clinics currently using it are notified
-- Historical data remains accessible
-- Can be referenced but not newly selected
+Historical data always remains accessible: published range versions are
+immutable and are never deleted, so past interpretations keep resolving against
+the version that was active at the time.
 
 ---
 
-## Version History and Auditing
+## Version History and Selection History
 
-### Viewing Version History
+### Selection History
 
-1. Open any range set
-2. Click **History** tab
-3. Browse the timeline of changes
+The catalog's top-level **History** button opens the **Selection History**
+modal — the record of which range set has been activated for the clinic:
 
-### Audit Information
+| Column | Meaning |
+|:-------|:--------|
+| **Range Set** | The activated set's name |
+| **Version** | The activated version |
+| **Activated** | When it was selected |
+| **By** | Who activated it |
+| **Status** | **Active** for the current set, **Inactive** for prior ones |
 
-Each event records:
-- **Timestamp**: When the action occurred
-- **Actor**: Who performed the action
-- **Action Type**: Added, replaced, removed, published, etc.
-- **Details**: Specific changes made
-- **Rationale**: Why the change was made (if provided)
+### Range-Level Audit
 
-### Comparing Versions
+Individual range changes are audited as they happen rather than in a browsable
+per-set timeline: every add, edit, and delete on a draft requires a
+**change/audit reason**, and each edit creates a new immutable range version
+instead of overwriting the previous one. Published versions are locked, so the
+version that was live for any interpretation is always recoverable.
 
-1. In the History tab, select two versions
-2. Click **Compare**
-3. View side-by-side differences
+{: .note }
+The app does not currently provide a side-by-side "compare two versions" view.
 
 ---
 
@@ -378,9 +387,9 @@ Each event records:
 
 ### "Cannot edit range" Error
 
-**Cause**: The range set is published (immutable).
+**Cause**: The range set version is published (immutable).
 
-**Solution**: Create a new draft version to make changes.
+**Solution**: Click **Create Editable Version** to make an editable draft, then edit there.
 
 ### "Change reason is required" Error
 
