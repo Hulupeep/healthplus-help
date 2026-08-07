@@ -7,7 +7,7 @@ nav_order: 5
 # Patient Context & Personas
 {: .no_toc }
 
-How patient-specific factors dynamically adjust reference range interpretation.
+How patient demographic and reproductive context selects which configured reference range applies.
 {: .fs-6 .fw-300 }
 
 ## Table of contents
@@ -53,7 +53,7 @@ When **not pregnant**, the form shows menstrual-cycle context:
 ## Pregnancy Context
 
 {: .important }
-Pregnancy is the most significant context modifier in the platform. Nearly every biomarker shifts during pregnancy.
+Pregnancy physiology shifts nearly every biomarker, so recording pregnancy status matters. Note how the platform actually *uses* it: range selection matches on the **Currently Pregnant** yes/no flag only — pregnancy *stage* and trimester are recorded context, **not** range-selection keys — and it applies a pregnancy-specific range only where one has been configured for that analyte. The seeded ranges are unstratified adult ranges (`healthplus#38`), so nothing is auto-substituted by trimester today; the shifted values below are illustrative physiology, not thresholds the app computes.
 
 ### Setting Up Pregnancy Context
 
@@ -135,6 +135,9 @@ A persona represents a clinical phenotype with specific range requirements:
 - Patients on thyroid medication with adjusted TSH targets
 - Post-menopausal women with modified hormone ranges
 
+{: .note }
+In the current app, **persona** is a *precedence scope*, not an automatic cohort matcher. Range precedence resolves in the order **patient → persona → global → conventional**, and a range can be promoted to persona scope (see the workflow below). There is **no persona-assignment screen and no persona-based matching**: the demographic matcher (sex, age, pregnancy yes/no, menstrual phase) has no persona dimension, so a persona-scoped range takes effect through the precedence chain rather than by auto-tagging a patient to a cohort. Treat personas as an authoring/governance concept, and the phenotypes above as illustrative.
+
 ### Example Personas
 
 {: .warning }
@@ -181,29 +184,39 @@ Adjusted Ranges:
 
 ## Persona Promotion Workflow
 
-When a patient override could benefit other similar patients:
+When an existing patient-scoped range override could benefit other similar patients, it can be **promoted** to a broader scope. There is no separate "create override" screen — patient overrides originate from configured/seeded data, and eligible ones surface in the **Pending Promotions** card on the patient dashboard. (The in-app clinician action on an individual result is **Add Clinician Note or Adjustment** via *Explain*, not a range-editing form.)
 
 ```
 ┌─────────────────────────────────────────────────────────────────┐
-│ PATIENT-LEVEL OVERRIDE                                          │
-│ "For THIS patient, TSH optimal is 0.5-1.5 mIU/L"               │
+│ PENDING PROMOTIONS card (patient dashboard)                      │
+│ An existing patient-scoped range override, e.g. TSH 0.5–1.5      │
+│ mIU/L, listed with a "Promote" action                           │
 └─────────────────────────────────────────────────────────────────┘
                               │
-                              ▼ (Clinician reviews & promotes)
+                              ▼ (Clinician clicks Promote)
 ┌─────────────────────────────────────────────────────────────────┐
-│ PERSONA PROMOTION DIALOG                                        │
-│ Target Scope: ● Persona  ○ Global                               │
-│ Persona ID: hashimotos-treated                                  │
-│ Reviewer: Dr. Smith                                              │
-│ Rationale: Patients on thyroid med need tighter TSH             │
+│ "Promote Range Override" dialog                                 │
+│ Target Scope:       ● Persona   ○ Global                        │
+│ Reviewer:           (required)                                   │
+│ Persona identifier: e.g. athletic-female-30-40                  │
+│                     (required when scope = Persona)             │
+│ Rationale:          (optional)                                  │
+│                                       [Cancel] [Promote range]  │
 └─────────────────────────────────────────────────────────────────┘
                               │
                               ▼
 ┌─────────────────────────────────────────────────────────────────┐
-│ PERSONA-LEVEL RANGE                                             │
-│ All patients assigned to "hashimotos-treated" use this range   │
+│ PERSONA-SCOPED RANGE                                             │
+│ The range now sits at persona scope and takes precedence over   │
+│ global/conventional ranges via the precedence chain. There is   │
+│ no persona-assignment UI or persona matcher today, so this is a  │
+│ precedence/governance concept — not an automatic per-patient    │
+│ cohort substitution.                                            │
 └─────────────────────────────────────────────────────────────────┘
 ```
+
+{: .note }
+Dialog fields verified against the real **Promote Range Override** dialog (`PromotionDialog.tsx`): a Target Scope (Persona / Global) radio, a required **Reviewer** name, a **Persona identifier** required when scope is Persona, and an optional **Rationale** — surfaced from the **Pending Promotions** card, which lists existing patient-scoped range versions eligible for promotion.
 
 ---
 
@@ -215,12 +228,12 @@ When a patient override could benefit other similar patients:
 ### Always Verify Context
 - Confirm pregnancy status at each visit
 - Update menstrual phase for hormone panels
-- Review persona assignments periodically
+- Review promoted persona and global ranges periodically
 
 ### Document Context Changes
 - Use pregnancy notes for complications
 - Track cycle irregularities in cycle notes
-- Note reason for persona assignment
+- Record a rationale when promoting a range to persona or global scope
 
 ---
 
