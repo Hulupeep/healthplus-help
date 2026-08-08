@@ -68,12 +68,11 @@ Practical walkthroughs for common tasks in the HealthPlus platform.
 ### Reviewing Flagged Results
 
 1. Navigate to the **Lab Results** tab
-2. Look for results flagged as:
-   - **Functional High** (red)
-   - **Functional Low** (red)
-3. Click **Explain** to understand the flag
-4. Review the range precedence chain
-5. Check for clinician comments
+2. Check each result's **Status**, which reads **Normal**, **Low**, **High**, **Unclassified**, or **N/A** — there is no separate "Functional High/Low" status
+3. Read the range badge in each column: **Applied** marks the range actually used for that result, **Available** a range that exists but was not applied. This badge (not the Status word) is how a functional classification is distinguished from a conventional one
+4. Click **Explain** to understand how the status was determined
+5. Review the range precedence chain (patient override → persona → global)
+6. Check for clinician notes
 
 ### Using Explainability
 
@@ -84,20 +83,22 @@ Practical walkthroughs for common tasks in the HealthPlus platform.
    - Patient context factors
    - Citation sources
    - Version history
-4. Add a comment if you have clinical insight
+4. Click **Add clinician note** to record clinical insight
 
 ---
 
 ## Range Management
 
-### Creating a Patient Override
+### Adding a Clinician Note or Adjustment
+
+The Explain dialog does not create a range override by entering new bounds — there is no in-app "create override" form. To record clinical input on a result:
 
 1. Click **Explain** on the relevant result
-2. Click **Add Override**
-3. Enter new range bounds
-4. Provide clinical rationale
-5. Enter your name
-6. Click **Create Override**
+2. Click **Add clinician note**
+3. In the **Add Clinician Note or Adjustment** dialog, enter your commentary
+4. Click **Add Comment**
+
+Patient-scoped range overrides themselves come from configured data, not from this dialog. When an override exists it sits at the top of the precedence chain (patient override → persona → global) and can be advanced with the promotion flow below.
 
 ### Promoting to Persona
 
@@ -169,12 +170,12 @@ Before publishing a functional range set, every member needs traceable source su
 ### Before Uploading Results
 - Verify patient demographics are correct
 - Update pregnancy/cycle status if applicable
-- Assign appropriate persona if known
+- Confirm date of birth and sex at birth — age and sex drive which range applies (demographics select the range; there is no persona-assignment step)
 
 ### After Reviewing Results
 - Document your clinical reasoning
-- Add comments for unusual interpretations
-- Consider creating overrides for individual needs
+- Add clinician notes for unusual interpretations
+- Add a clinician note or adjustment to capture individual clinical context
 
 ### For AI Interpretations
 - Always review before saving
