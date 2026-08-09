@@ -42,11 +42,11 @@ When you view a patient's results, you see the conventional classification along
 
 The platform uses something called a Named Range Set.
 
-Think of a Named Range Set as a complete reference book. It contains definitions for hundreds of lab markers, each with boundaries for what is considered low, optimal, or high.
+Think of a Named Range Set as a complete reference book. It contains definitions for hundreds of lab markers, each with the boundaries that determine whether a value is classified as low, normal, or high (with critical flags for extreme values). A functional set draws those boundaries around what is optimal rather than merely what avoids disease — but the classification the platform assigns is always one of low, normal, or high. "Optimal" is the philosophy behind where the boundaries sit, not a separate status the system labels a result with.
 
 Your clinic selects which reference book to use. This is a foundational decision that shapes how all results are evaluated.
 
-Some clinics focus on general wellness. Others specialize in athletic performance. Others work with fertility patients. Each of these contexts may benefit from a different reference book — a different Named Range Set.
+A Named Range Set represents a clinical philosophy — not a lab, a test method, or a specimen type. General wellness, athletic performance, and fertility-focused care are examples of the kinds of philosophy a set could express. Today the platform ships one seeded functional set — **Optimal Wellness Functional** — alongside the conventional catalog; philosophy-specific sets beyond that are something a clinic can author, not a menu of ready-made options you pick from.
 
 Once your clinic has selected its Named Range Set, the platform uses that framework consistently for all patients. Within that framework, the system finds the most appropriate range for each patient based on their demographics: age, sex, pregnancy status, and so on.
 
