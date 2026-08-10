@@ -30,11 +30,11 @@ Administrator functions are available in the **Admin** section of the main menu.
 
 ### What Administrators Can Do
 
-- View and compare available range sets
+- View, preview, and export available range sets (JSON/CSV)
 - Select the active range set for the clinic
 - Browse individual ranges within any set
 - Create and manage draft range sets
 - Add, edit, and remove draft functional ranges with audit reasons
 - Maintain citations and source notes for functional range members
-- Publish and deprecate range sets
-- View audit logs and version history
+- Publish and activate range sets (a prior version is retired by activating a replacement)
+- View selection history — which range set was activated, when, and by whom — plus immutable range version history
