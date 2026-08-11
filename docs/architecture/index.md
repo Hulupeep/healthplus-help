@@ -36,6 +36,8 @@ Understanding the platform's architecture helps you:
 
 ---
 
-## For Developers
+## Going Deeper
 
-If you're integrating with HealthPlus or building extensions, see the [API Documentation](#) and [Developer Guide](#).
+For a detailed treatment of how a clinic's worldview (the Named Range Set) stays separate from testing methodology (specimen type), read [Philosophy vs Methodology]({% link docs/architecture/philosophy-vs-methodology.md %}).
+
+Administrators configuring range sets should also see the [Admin Guides]({% link docs/guides/admin/index.md %}).
