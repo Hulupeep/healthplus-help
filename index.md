@@ -34,7 +34,7 @@ Functional medicine ranges are narrower, evidence-based thresholds that represen
 Every lab result shows both conventional and functional ranges side-by-side, making it easy to identify when a "normal" result might still be suboptimal.
 
 ### 🎯 Context-Sensitive Analysis
-The platform automatically adjusts reference ranges based on patient demographics, pregnancy status, menstrual phase, and clinical personas.
+The platform selects reference ranges by patient demographics — sex, age, pregnancy status, and menstrual phase. Clinical personas are a *precedence scope* for authored range sets (patient → persona → global → conventional), not an automatically matched cohort: there is no persona-assignment step, and the range matcher keys on demographics alone. Demographically stratified ranges are authoring-supported; today's seeded functional set uses broad adult ranges.
 
 ### 📊 Complete Explainability
 Click "Explain" on any result to see which range was applied, why it was chosen, and the evidence supporting it.
@@ -43,7 +43,7 @@ Click "Explain" on any result to see which range was applied, why it was chosen,
 Generate clinical summaries that synthesize multiple flagged results into actionable insights.
 
 ### 🔄 Range Override Workflow
-Create patient-specific ranges and promote them to reusable personas for similar patient cohorts.
+Add a clinician note or adjustment from the Explain dialog, and promote a configured range override to a reusable persona scope through the Promote Range Override flow. (Patient-specific ranges are configured/seeded — there is no in-app "create override" screen.)
 
 ---
 
