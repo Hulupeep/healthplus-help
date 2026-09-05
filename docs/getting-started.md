@@ -43,7 +43,7 @@ For female patients, capture reproductive context:
 
 ### Step 3: Upload Lab Results
 
-You have two options:
+You have three ways to add results:
 
 **Option A: CSV Upload**
 1. Go to the patient's **Lab Results** tab
@@ -58,6 +58,22 @@ You have two options:
 3. Select the analyte
 4. Enter value and unit
 5. Click **Save Result**
+
+**Option C: PDF Lab Report (staged, review-gated)**
+
+A PDF report is *not* imported straight away like a CSV. It is staged in private
+quarantine, safety-scanned, and only becomes a result after a clinician reviews
+the extracted candidates and explicitly promotes one — nothing is imported
+automatically.
+
+1. On the upload screen, use the **Upload PDF lab report** card
+2. Select your PDF report (maximum 20 MiB)
+3. Tick the checkbox confirming the report belongs to this patient
+4. Click **Store PDF in quarantine** — the report is stored privately and
+   safety-scanned. You'll see the assessment, safety-scan state, and
+   **No results imported (N candidates)** — no results exist yet at this point.
+5. Once the safety scan is clean, click **Open extraction review** to inspect the
+   extracted candidates and promote the ones you confirm into results.
 
 ### Step 4: Review Flagged Results
 
