@@ -3,6 +3,7 @@ title: Step-by-Step Guides
 layout: default
 nav_order: 9
 has_children: true
+META: {type: doc.navigation, reviewed: '2026-09-09', change: Add PDF upload and review walkthrough}
 ---
 
 # Step-by-Step Guides
@@ -39,6 +40,14 @@ Practical walkthroughs for common tasks in the HealthPlus platform.
 ---
 
 ## Lab Results
+
+### Uploading and Reviewing PDF Lab Reports
+
+Upload once, wait for **Ready for review**, then inspect the original alongside the
+proposed results. Page attestation, region decisions, final verification and clinical
+import are separate steps.
+
+[Full PDF upload and review guide →]({% link docs/guides/pdf-upload-review.md %})
 
 ### Uploading Lab Results (CSV)
 
