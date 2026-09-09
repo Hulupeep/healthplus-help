@@ -2,6 +2,7 @@
 title: Getting Started
 layout: default
 nav_order: 2
+META: {type: doc.user-guide, reviewed: '2026-09-09', change: PDF upload and review help}
 ---
 
 # Getting Started with HealthPlus
@@ -69,11 +70,16 @@ automatically.
 1. On the upload screen, use the **Upload PDF lab report** card
 2. Select your PDF report (maximum 20 MiB)
 3. Tick the checkbox confirming the report belongs to this patient
-4. Click **Store PDF in quarantine** — the report is stored privately and
-   safety-scanned. You'll see the assessment, safety-scan state, and
-   **No results imported (N candidates)** — no results exist yet at this point.
-5. Once the safety scan is clean, click **Open extraction review** to inspect the
-   extracted candidates and promote the ones you confirm into results.
+4. Click **Upload PDF** once. Follow the saved status through scanning, PDF reading
+   and OCR/extraction. Processing continues automatically; do not re-upload to refresh it.
+5. At **Ready for review**, click **Review extracted results**. Compare proposals
+   with the original, account for each region and attest each inspected page.
+6. Complete extraction verification only after checking for omissions. Verification
+   does not import results; clinical promotion is a separate authorised workflow.
+
+[Read the full PDF upload and review guide]({% link docs/guides/pdf-upload-review.md %})
+for every status, **Attest page**, **Proposed regions**, corrections, missing results
+and the current OCR-screen import limitation.
 
 ### Step 4: Review Flagged Results
 
